@@ -69,6 +69,7 @@ window.onload = function () {
                 console.log("Wallet connected:", accounts[0]);
                 hideModal(); // Hide the modal after successful connection
                 startButton.addEventListener("click", startGame);
+                startButton.addEventListener("touchstart", startGame);
                 // startGame()
             })
             .catch(function (error) {
@@ -102,9 +103,11 @@ window.onload = function () {
         if (ethereum.selectedAddress !== null) {
             // startGame()
             startButton.addEventListener("click", startGame);
+            startButton.addEventListener("touchstart", startGame);
         } else {
             showModal()
             connectButton.addEventListener("click", connectWallet);
+            startButton.addEventListener("touchstart", connectWallet);
         }
     } else {
         console.log("please install metamask")
@@ -193,7 +196,7 @@ function placePipes() {
 }
 
 function moveBird(e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX") {
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" ||  e.type === "touchstart") {
         //jump
         velocityY = -6;
 
