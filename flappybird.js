@@ -43,6 +43,7 @@ let walletConnect = false
 
 window.onload = function () {
     var modal = document.getElementById("myModal");
+    var myModalPlease = document.getElementById("myModalPlease");
     // Get the button element
     var connectButton = document.getElementById("connectButton");
     var startButton = document.getElementById("startButton");
@@ -54,6 +55,15 @@ window.onload = function () {
     function hideModal() {
         modal.style.display = "none";
     }
+
+    function showModalPlease() {
+        myModalPlease.style.display = "block";
+    }
+    // Function to hide the modal
+    function hideModalPlease() {
+        myModalPlease.style.display = "none";
+    }
+
     function startGame() {
         // Rest of your game initialization code...
         document.getElementById("startButtonContainer").style.display = "none";
@@ -99,21 +109,22 @@ window.onload = function () {
     bottomPipeImg = new Image();
     bottomPipeImg.src = "./bottompipe.png";
 
-    startButton.addEventListener("click", startGame);
-    startButton.addEventListener("touchstart", startGame);
-    // if (typeof window.ethereum !== "undefined") {
-    //     if (ethereum.selectedAddress !== null) {
-    //         // startGame()
-    //         startButton.addEventListener("click", startGame);
-    //         startButton.addEventListener("touchstart", startGame);
-    //     } else {
-    //         showModal()
-    //         connectButton.addEventListener("click", connectWallet);
-    //         startButton.addEventListener("touchstart", connectWallet);
-    //     }
-    // } else {
-    //     console.log("please install metamask")
-    // }
+    // startButton.addEventListener("click", startGame);
+    // startButton.addEventListener("touchstart", startGame);
+    if (typeof window.ethereum !== "undefined") {
+        if (ethereum.selectedAddress !== null) {
+            // startGame()
+            startButton.addEventListener("click", startGame);
+            startButton.addEventListener("touchstart", startGame);
+        } else {
+            showModal()
+            connectButton.addEventListener("click", connectWallet);
+            startButton.addEventListener("touchstart", connectWallet);
+        }
+    } else {
+        showModalPlease()
+        console.log("please install metamask")
+    }
 }
 
 function update() {
