@@ -98,20 +98,21 @@ window.onload = function () {
     bottomPipeImg = new Image();
     bottomPipeImg.src = "./bottompipe.png";
 
-    // console.log("********************",window.ethereum.isMetaMask)
-    if (typeof window.ethereum !== "undefined") {
-        if (ethereum.selectedAddress !== null) {
-            // startGame()
-            startButton.addEventListener("click", startGame);
-            startButton.addEventListener("touchstart", startGame);
-        } else {
-            showModal()
-            connectButton.addEventListener("click", connectWallet);
-            startButton.addEventListener("touchstart", connectWallet);
-        }
-    } else {
-        console.log("please install metamask")
-    }
+    startButton.addEventListener("click", startGame);
+    startButton.addEventListener("touchstart", startGame);
+    // if (typeof window.ethereum !== "undefined") {
+    //     if (ethereum.selectedAddress !== null) {
+    //         // startGame()
+    //         startButton.addEventListener("click", startGame);
+    //         startButton.addEventListener("touchstart", startGame);
+    //     } else {
+    //         showModal()
+    //         connectButton.addEventListener("click", connectWallet);
+    //         startButton.addEventListener("touchstart", connectWallet);
+    //     }
+    // } else {
+    //     console.log("please install metamask")
+    // }
 }
 
 function update() {
