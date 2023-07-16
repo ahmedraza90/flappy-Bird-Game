@@ -171,8 +171,10 @@ function update() {
     context.font = "45px sans-serif";
     context.fillText(score, 5, 45);
 
+
     if (gameOver) {
-        context.fillText("GAME OVER", 5, 90);
+        displayLeaderboard();
+        return;
     }
 }
 
@@ -230,3 +232,39 @@ function detectCollision(a, b) {
         a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
 
+
+
+function displayLeaderboard() {
+    const leaderboardElement = document.getElementById("leaderboard");
+    leaderboardElement.innerHTML = "<h2>Leaderboard</h2>";
+
+    // Fetch leaderboard data or use local data structure
+    // Format the leaderboard content as desired (e.g., HTML table)
+    const leaderboardContent = `
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populate leaderboard data dynamically -->
+                <tr>
+                    <td>1</td>
+                    <td>John</td>
+                    <td>100</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jane</td>
+                    <td>90</td>
+                </tr>
+                <!-- ... -->
+            </tbody>
+        </table>
+    `;
+
+    leaderboardElement.innerHTML += leaderboardContent;
+}
