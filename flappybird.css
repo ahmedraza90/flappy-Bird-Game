@@ -88,3 +88,30 @@ body {
 
 }
 
+#leaderboard {
+  text-align: center;
+}
+
+#leaderboard h2 {
+  margin-bottom: 20px;
+}
+
+#leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#leaderboard th,
+#leaderboard td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+#leaderboard th {
+  background-color: #f2f2f2;
+}
+
+#leaderboard tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
