@@ -243,6 +243,7 @@ function displayLeaderboard() {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Leaderboard</title>
             <link rel="stylesheet" href="flappybird.css">
+            <script src="flappybird.js"></script>
         </head>
         <body>
             <div id="leaderboard">
@@ -270,7 +271,17 @@ function displayLeaderboard() {
                         <!-- ... -->
                     </tbody>
                 </table>
+                <button id="restartButton">Restart Game</button>
             </div>
+            <script>
+                const restartButton = document.getElementById("restartButton");
+                restartButton.addEventListener("click", restartGame);
+                
+                function restartGame() {
+                    window.opener.restartGame();
+                    window.close();
+                }
+            </script>
         </body>
         </html>
     `;
@@ -280,3 +291,4 @@ function displayLeaderboard() {
     leaderboardWindow.document.write(leaderboardContent);
     leaderboardWindow.document.close();
 }
+
