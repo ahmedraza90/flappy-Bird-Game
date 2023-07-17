@@ -235,49 +235,48 @@ function detectCollision(a, b) {
 
 
 function displayLeaderboard() {
-    const modal = document.createElement("div");
-    modal.id = "leaderboardModal";
-    modal.classList.add("modal");
-
     const leaderboardContent = `
-        <div class="modal-content">
-            <h2>Leaderboard</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Populate leaderboard data dynamically -->
-                    <tr>
-                        <td>1</td>
-                        <td>John</td>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane</td>
-                        <td>90</td>
-                    </tr>
-                    <!-- ... -->
-                </tbody>
-            </table>
-            <button id="restartButton">Restart Game</button>
-        </div>
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Leaderboard</title>
+            <link rel="stylesheet" href="flappybird.css">
+        </head>
+        <body>
+            <div id="leaderboard">
+                <h2>Leaderboard</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Populate leaderboard data dynamically -->
+                        <tr>
+                            <td>1</td>
+                            <td>John</td>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jane</td>
+                            <td>90</td>
+                        </tr>
+                        <!-- ... -->
+                    </tbody>
+                </table>
+            </div>
+        </body>
+        </html>
     `;
 
-    modal.innerHTML = leaderboardContent;
-    document.body.appendChild(modal);
-
-    const restartButton = document.getElementById("restartButton");
-    restartButton.addEventListener("click", restartGame);
-
-    function restartGame() {
-        // Reset game state and close the leaderboard modal
-        modal.remove();
-        // Additional game reset logic...
-    }
+    // Open a new pop-up window
+    const leaderboardWindow = window.open("", "Leaderboard", "width=400,height=500");
+    leaderboardWindow.document.write(leaderboardContent);
+    leaderboardWindow.document.close();
 }
