@@ -40,6 +40,7 @@ let gameOver = false;
 let score = 0;
 let gamestart = false
 let walletConnect = false
+let walletAddress = ""
 
 window.onload = function () {
     var modal = document.getElementById("myModal");
@@ -76,6 +77,7 @@ window.onload = function () {
         // Request account access
         ethereum.request({ method: "eth_requestAccounts" })
             .then(function (accounts) {
+                walletAddress = accounts[0]
                 // Account connected successfully
                 console.log("Wallet connected:", accounts[0]);
 
@@ -194,7 +196,7 @@ function update() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ walletAddress: `${accounts[0]}`, score: score }),
+            body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
         })
         .then(response => response.json())
         .then(data => {
