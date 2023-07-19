@@ -125,6 +125,7 @@ window.onload = function () {
     // startButton.addEventListener("click", startGame);
     // startButton.addEventListener("touchstart", startGame);
     if (typeof window.ethereum !== "undefined") {
+        console.log("***************",ethereum.selectedAddress)
         if (ethereum.selectedAddress !== null) {
             // startGame()
             startButton.addEventListener("click", startGame);
