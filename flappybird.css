@@ -15,7 +15,7 @@ body {
     background-image: url("./flappybirdbg.png");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover; /* Added this line */
     border: 10px solid white;
     border-radius: 10px;
 }
