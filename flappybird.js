@@ -200,7 +200,7 @@ function update() {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
+            console.log('Success:', data["0"]);
             displayLeaderboard(data);
         })
         .catch((error) => {
