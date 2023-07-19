@@ -268,7 +268,16 @@ function detectCollision(a, b) {
 
 
 function displayLeaderboard(data) {
-    console.log("************************************",data)
+
+    // Create rows for the leaderboard table using the data
+    let dataRows = data.map((item, index) =>
+        `<tr>
+            <td>${index + 1}</td>
+            <td>${item.walletAddress}</td>
+            <td>${item.score}</td>
+         </tr>`
+    ).join('');
+
     const leaderboardContent = `
         <!DOCTYPE html>
         <html>
@@ -286,23 +295,12 @@ function displayLeaderboard(data) {
                     <thead>
                         <tr>
                             <th>Rank</th>
-                            <th>Player</th>
+                            <th>Wallet Address</th>
                             <th>Score</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Populate leaderboard data dynamically -->
-                        <tr>
-                            <td>1</td>
-                            <td>John</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane</td>
-                            <td>90</td>
-                        </tr>
-                        <!-- ... -->
+                        ${dataRows}
                     </tbody>
                 </table>
                 <button id="restartButton">Restart Game</button>
