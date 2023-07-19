@@ -78,6 +78,19 @@ window.onload = function () {
             .then(function (accounts) {
                 // Account connected successfully
                 console.log("Wallet connected:", accounts[0]);
+
+                // Send the wallet address to the backend
+                fetch('https://qr-code-api.oasisx.world/flappy-save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ walletAddress: "0x987" })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch((error) => {
+                        console.error('Error:', error);
+                });
+
                 hideModal(); // Hide the modal after successful connection
                 startButton.addEventListener("click", startGame);
                 startButton.addEventListener("touchstart", startGame);
@@ -173,6 +186,23 @@ function update() {
 
 
     if (gameOver) {
+        
+        // // Make a POST request to your backend API
+        // fetch('https://qr-code-api.oasisx.world/TwinCyclops', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ score: score }),
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('Success:', data);
+        // })
+        // .catch((error) => {
+        //     console.error('Error:', error);
+        // });
+        
         displayLeaderboard();
         return;
     }
@@ -211,7 +241,7 @@ function placePipes() {
 }
 
 function moveBird(e) {
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" ||  e.type === "touchstart") {
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" || e.type === "touchstart") {
         //jump
         velocityY = -6;
 
