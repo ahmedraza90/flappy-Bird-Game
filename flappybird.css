@@ -19,14 +19,6 @@ body {
     border: 10px solid white;
     border-radius: 10px;
 }
-/* For mobile screens */
-@media only screen and (max-width: 600px) {
-  #board {
-    top: 10%;
-    left: 10%;
-    transform: translate(-10%, -10%);
-  }
-}
 
 
 /* CSS styles for the modal */
