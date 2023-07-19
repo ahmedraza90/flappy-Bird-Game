@@ -136,18 +136,16 @@ body {
   position: relative;
   background-color: #fefefe;
   margin: auto;
-  padding: 20px; /* Add padding to create space between content and borders */
+  padding: 0;
   border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
   animation-name: animatetop;
-  animation-duration: 0.4s;
-  word-wrap: break-word; /* Wrap long words onto the next line */
-  overflow-wrap: break-word; /* Wrap long words in the middle if needed */
+  animation-duration: 0.4s
 }
-
 
 /* Add Animation */
 @-webkit-keyframes animatetop {
