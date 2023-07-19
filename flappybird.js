@@ -83,7 +83,7 @@ window.onload = function () {
                 fetch('https://qr-code-api.oasisx.world/flappy-save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ walletAddress: "0x987" })
+                    body: JSON.stringify({ walletAddress: `${accounts[0]}` })
                 })
                 .then(response => response.json())
                 .then(data => console.log(data))
@@ -189,22 +189,22 @@ function update() {
     if (gameOver) {
         
         // // Make a POST request to your backend API
-        // fetch('https://qr-code-api.oasisx.world/TwinCyclops', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ score: score }),
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('Success:', data);
-        // })
-        // .catch((error) => {
-        //     console.error('Error:', error);
-        // });
+        fetch('https://qr-code-api.oasisx.world/flappy-update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ walletAddress: `${accounts[0]}`, score: score }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            displayLeaderboard(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
         
-        displayLeaderboard();
         return;
     }
 }
@@ -265,7 +265,8 @@ function detectCollision(a, b) {
 
 
 
-function displayLeaderboard() {
+function displayLeaderboard({data}) {
+    console.log(data)
     const leaderboardContent = `
         <!DOCTYPE html>
         <html>
