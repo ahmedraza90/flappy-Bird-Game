@@ -38,6 +38,19 @@ let score = 0;
 let gamestart = false
 let walletConnect = false
 let walletAddress = ""
+let isModalOpen = false;
+
+// When opening popup
+function openPopup() {
+    isModalOpen = true;
+    // TODO: Add your logic here to display the popup...
+}
+
+// When closing popup
+function closePopup() {
+    isModalOpen = false;
+    // TODO: Add your logic here to hide the popup...
+}
 
 window.onload = function () {
     var modal = document.getElementById("myModal");
@@ -241,6 +254,9 @@ function placePipes() {
 }
 
 function moveBird(e) {
+    if (isModalOpen) {
+        return;
+    }
     if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" || e.type === "touchstart") {
         //jump
         velocityY = -6;
@@ -262,6 +278,10 @@ function detectCollision(a, b) {
         a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
 
+function compressAddress(address, visibleCharStart, visibleCharEnd, separator = '...') {
+    return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
+}
+
 function displayLeaderboard(data) {
     const leaderboardBody = document.getElementById('leaderboardBody');
   
@@ -272,7 +292,7 @@ function displayLeaderboard(data) {
     let dataRows = data.map((item, index) =>
       `<tr>
           <td>${index + 1}</td>
-          <td>${item.walletAddress}</td>
+          <td>${compressAddress(item.walletAddress, 6, 0)}</td>
           <td>${item.score}</td>
        </tr>`
     ).join('');
@@ -288,24 +308,26 @@ function displayLeaderboard(data) {
   
     // Show the modal
     modal.style.display = "block";
+    openPopup()
   
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
       modal.style.display = "none";
+      closePopup();
     }
   
     // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+    // window.onclick = function(event) {
+    //   if (event.target == modal) {
+    //     modal.style.display = "none";
+    //   }
+    // }
   
     const restartButton = document.getElementById("restartButton");
     
     restartButton.addEventListener("click", function () {
       modal.style.display = "none";
-      restartGame();
+      closePopup();
     });
-  }
+}
   
