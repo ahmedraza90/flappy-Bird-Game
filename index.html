@@ -30,7 +30,25 @@
     <div id="startButtonContainer">
         <button id="startButton">Start Game</button>
     </div>
-    <div id="leaderboard"></div>
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <span id="closeLeaderboardModal" class="close">&times;</span>
+            <h2>Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Wallet Address</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                    <!-- Leaderboard data will be inserted here -->
+                </tbody>
+            </table>
+            <button id="restartButton">Restart Game</button>
+        </div>
+    </div>
 </body>
 
 </html>

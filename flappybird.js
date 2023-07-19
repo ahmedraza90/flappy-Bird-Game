@@ -1,6 +1,3 @@
-
-
-
 //board
 let board;
 let boardWidth = 360;
@@ -265,62 +262,50 @@ function detectCollision(a, b) {
         a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
 
-
-
 function displayLeaderboard(data) {
-
+    const leaderboardBody = document.getElementById('leaderboardBody');
+  
+    // Clear old leaderboard data
+    leaderboardBody.innerHTML = '';
+  
     // Create rows for the leaderboard table using the data
     let dataRows = data.map((item, index) =>
-        `<tr>
-            <td>${index + 1}</td>
-            <td>${item.walletAddress}</td>
-            <td>${item.score}</td>
-         </tr>`
+      `<tr>
+          <td>${index + 1}</td>
+          <td>${item.walletAddress}</td>
+          <td>${item.score}</td>
+       </tr>`
     ).join('');
-
-    const leaderboardContent = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Leaderboard</title>
-            <link rel="stylesheet" href="flappybird.css">
-            <script src="flappybird.js"></script>
-        </head>
-        <body>
-            <div id="leaderboard">
-                <h2>Leaderboard</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Wallet Address</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${dataRows}
-                    </tbody>
-                </table>
-                <button id="restartButton">Restart Game</button>
-            </div>
-            <script>
-                const restartButton = document.getElementById("restartButton");
-                restartButton.addEventListener("click", restartGame);
-                
-                function restartGame() {
-                    window.opener.restartGame();
-                    window.close();
-                }
-            </script>
-        </body>
-        </html>
-    `;
-
-    // Open a new pop-up window
-    const leaderboardWindow = window.open("", "Leaderboard", "width=400,height=500");
-    leaderboardWindow.document.write(leaderboardContent);
-    leaderboardWindow.document.close();
-}
-
+  
+    // Insert the new rows
+    leaderboardBody.innerHTML = dataRows;
+  
+    // Get the modal
+    var modal = document.getElementById("leaderboardModal");
+  
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closeLeaderboardModal");
+  
+    // Show the modal
+    modal.style.display = "block";
+  
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+  
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  
+    const restartButton = document.getElementById("restartButton");
+    
+    restartButton.addEventListener("click", function () {
+      modal.style.display = "none";
+      restartGame();
+    });
+  }
+  
