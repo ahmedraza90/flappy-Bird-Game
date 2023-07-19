@@ -201,7 +201,7 @@ function update() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data["0"]);
-            displayLeaderboard(data);
+            displayLeaderboard(data["0"]);
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -267,8 +267,8 @@ function detectCollision(a, b) {
 
 
 
-function displayLeaderboard({data}) {
-    console.log(data)
+function displayLeaderboard(data) {
+    console.log("************************************",data)
     const leaderboardContent = `
         <!DOCTYPE html>
         <html>
