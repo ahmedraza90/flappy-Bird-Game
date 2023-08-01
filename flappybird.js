@@ -51,113 +51,116 @@ function closePopup() {
     isModalOpen = false;
     // TODO: Add your logic here to hide the popup...
 }
-window.onload = function () {
-    var modal = document.getElementById("myModal");
-    function showModal() {
-        modal.style.display = "block";
-    }
-    showModal()
-}
 // window.onload = function () {
 //     var modal = document.getElementById("myModal");
-//     var myModalPlease = document.getElementById("myModalPlease");
-//     // Get the button element
-//     var connectButton = document.getElementById("connectButton");
-//     var startButton = document.getElementById("startButton");
-
 //     function showModal() {
 //         modal.style.display = "block";
 //     }
-//     // Function to hide the modal
-//     function hideModal() {
-//         modal.style.display = "none";
-//     }
-
-//     function showModalPlease() {
-//         myModalPlease.style.display = "block";
-//     }
-//     // Function to hide the modal
-//     function hideModalPlease() {
-//         myModalPlease.style.display = "none";
-//     }
-
-//     function startGame() {
-//         // Rest of your game initialization code...
-//         document.getElementById("startButtonContainer").style.display = "none";
-//         requestAnimationFrame(update);
-//         setInterval(placePipes, 1500); //every 1.5 seconds
-//         document.addEventListener("keydown", moveBird);
-//         document.addEventListener("touchstart", moveBird);
-//     }
-//     function connectWallet() {
-//         // Request account access
-//         ethereum.request({ method: "eth_requestAccounts" })
-//             .then(function (accounts) {
-//                 walletAddress = accounts[0]
-//                 // Account connected successfully
-//                 console.log("Wallet connected:", accounts[0]);
-
-//                 // Send the wallet address to the backend
-//                 fetch('https://qr-code-api.oasisx.world/flappy-save', {
-//                     method: 'POST',
-//                     headers: { 'Content-Type': 'application/json' },
-//                     body: JSON.stringify({ walletAddress: `${accounts[0]}` })
-//                 })
-//                 .then(response => response.json())
-//                 .then(data => console.log(data))
-//                 .catch((error) => {
-//                         console.error('Error:', error);
-//                 });
-
-//                 hideModal(); // Hide the modal after successful connection
-//                 startButton.addEventListener("click", startGame);
-//                 startButton.addEventListener("touchstart", startGame);
-//                 // startGame()
-//             })
-//             .catch(function (error) {
-//                 // Error occurred while connecting the wallet
-//                 console.error("Wallet connection error:", error);
-//             });
-
-//     }
-
-
-//     board = document.getElementById("board");
-//     board.height = boardHeight;
-//     board.width = boardWidth;
-//     context = board.getContext("2d"); //used for drawing on the board
-
-//     //load images
-//     birdImg = new Image();
-//     birdImg.src = "./flappybird.png";
-//     birdImg.onload = function () {
-//         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
-//     }
-
-//     topPipeImg = new Image();
-//     topPipeImg.src = "./toppipe.png";
-
-//     bottomPipeImg = new Image();
-//     bottomPipeImg.src = "./bottompipe.png";
-
-//     // startButton.addEventListener("click", startGame);
-//     // startButton.addEventListener("touchstart", startGame);
-//     if (typeof window.ethereum !== "undefined") {
-//         console.log("***************",ethereum.selectedAddress)
-//         if (ethereum.selectedAddress !== null) {
-//             // startGame()
-//             startButton.addEventListener("click", startGame);
-//             startButton.addEventListener("touchstart", startGame);
-//         } else {
-//             showModal()
-//             connectButton.addEventListener("click", connectWallet);
-//             startButton.addEventListener("touchstart", connectWallet);
-//         }
-//     } else {
-//         showModalPlease()
-//         console.log("please install metamask")
-//     }
+//     showModal()
 // }
+window.onload = function () {
+    var modal = document.getElementById("myModal");
+    var NometaMask = document.getElementById("NometaMask")
+    var connectButton = document.getElementById("connectButton");
+    
+    // Get the button element
+    var myModalPlease = document.getElementById("myModalPlease");
+    var startButton = document.getElementById("startButton");
+
+    function showModal() {
+        modal.style.display = "block";
+    }
+    // Function to hide the modal
+    function hideModal() {
+        modal.style.display = "none";
+    }
+
+    function showModalPlease() {
+        myModalPlease.style.display = "block";
+    }
+    // Function to hide the modal
+    function hideModalPlease() {
+        myModalPlease.style.display = "none";
+    }
+
+    function startGame() {
+        // Rest of your game initialization code...
+        document.getElementById("startButtonContainer").style.display = "none";
+        requestAnimationFrame(update);
+        setInterval(placePipes, 1500); //every 1.5 seconds
+        document.addEventListener("keydown", moveBird);
+        document.addEventListener("touchstart", moveBird);
+    }
+    function connectWallet() {
+        // Request account access
+        ethereum.request({ method: "eth_requestAccounts" })
+            .then(function (accounts) {
+                walletAddress = accounts[0]
+                // Account connected successfully
+                console.log("Wallet connected:", accounts[0]);
+
+                // Send the wallet address to the backend
+                fetch('https://qr-code-api.oasisx.world/flappy-save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ walletAddress: `${accounts[0]}` })
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch((error) => {
+                        console.error('Error:', error);
+                });
+
+                hideModal(); // Hide the modal after successful connection
+                startButton.addEventListener("click", startGame);
+                startButton.addEventListener("touchstart", startGame);
+                // startGame()
+            })
+            .catch(function (error) {
+                // Error occurred while connecting the wallet
+                console.error("Wallet connection error:", error);
+            });
+
+    }
+
+
+    board = document.getElementById("board");
+    board.height = boardHeight;
+    board.width = boardWidth;
+    context = board.getContext("2d"); //used for drawing on the board
+
+    //load images
+    birdImg = new Image();
+    birdImg.src = "./flappybird.png";
+    birdImg.onload = function () {
+        context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+    }
+
+    topPipeImg = new Image();
+    topPipeImg.src = "./toppipe.png";
+
+    bottomPipeImg = new Image();
+    bottomPipeImg.src = "./bottompipe.png";
+
+    // startButton.addEventListener("click", startGame);
+    // startButton.addEventListener("touchstart", startGame);
+    if (typeof window.ethereum !== "undefined") {
+        console.log("***************",ethereum.selectedAddress)
+        if (ethereum.selectedAddress !== null) {
+            startButton.addEventListener("click", startGame);
+            startButton.addEventListener("touchstart", startGame);
+        } else {
+            connectButton.style.display = "block"
+            showModal()
+            connectButton.addEventListener("click", connectWallet);
+            startButton.addEventListener("touchstart", connectWallet);
+        }
+    } else {
+        NometaMask.style.display = "block"
+        showModal()
+        console.log("please install metamask")
+    }
+}
 
 function update() {
 
