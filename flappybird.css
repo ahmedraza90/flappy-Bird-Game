@@ -211,3 +211,7 @@ td {
     padding: 8px 15px; /* Adjust the values as needed to create the desired gap */
 }
 
+.deadline {
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #888;
+}
