@@ -63,8 +63,6 @@ window.onload = function () {
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
     
-    // Get the button element
-    var myModalPlease = document.getElementById("myModalPlease");
     var startButton = document.getElementById("startButton");
 
     function showModal() {
@@ -75,13 +73,6 @@ window.onload = function () {
         modal.style.display = "none";
     }
 
-    function showModalPlease() {
-        myModalPlease.style.display = "block";
-    }
-    // Function to hide the modal
-    function hideModalPlease() {
-        myModalPlease.style.display = "none";
-    }
 
     function startGame() {
         // Rest of your game initialization code...
