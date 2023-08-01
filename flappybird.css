@@ -21,7 +21,7 @@ body {
 }
 
 
-CSS styles for the modal
+
 .modal {
   display: none;
   position: fixed;
@@ -36,8 +36,8 @@ CSS styles for the modal
 }
 
 .modal-content {
-  background: greenyellow;
-  /* background: linear-gradient(to bottom, #4e7dbf, #23385f); */
+  /* background: greenyellow; */
+  background: linear-gradient(to bottom, #4e7dbf, #23385f);
   border-radius: 10px;
   margin: 15% auto;
   padding: 20px;
