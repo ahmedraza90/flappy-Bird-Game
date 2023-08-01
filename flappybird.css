@@ -57,7 +57,7 @@ body {
 #connectButton {
   /* border-radius: 5px; */
   font-family: 'Silkscreen', cursive;
-  margin-bottom: 16px;
+
 }
 
 #startButton {
@@ -223,7 +223,7 @@ td {
 }
 .prize {
   width: 80%;
-  margin: 0 auto;
+  margin: 15px auto;
   border-top: 1px solid #888;
   border-bottom: 1px solid #888;
   
