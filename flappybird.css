@@ -212,8 +212,8 @@ td {
 }
 
 .rabbit {
-  text-align: center;
-  width: 80%
+  width: 80%;
+  margin: 0 auto;
 }
 .deadline {
   border-top: 1px solid #888;
