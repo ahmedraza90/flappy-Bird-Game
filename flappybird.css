@@ -36,8 +36,8 @@ body {
 }
 
 .modal-content {
-  /* background: greenyellow; */
-  background: linear-gradient(to bottom, #4e7dbf, #23385f);
+  /* background: yellowgreen; */
+  background: linear-gradient(to bottom, #35e94d, #39f170);
   border-radius: 10px;
   margin: 15% auto;
   padding: 20px;
