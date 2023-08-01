@@ -36,8 +36,8 @@ CSS styles for the modal
 }
 
 .modal-content {
-  /* background-color: #fefefe; */
-  background: linear-gradient(to bottom, #4e7dbf, #23385f);
+  background-color: greenyellow;
+  /* background: linear-gradient(to bottom, #4e7dbf, #23385f); */
   border-radius: 10px;
   margin: 15% auto;
   padding: 20px;
