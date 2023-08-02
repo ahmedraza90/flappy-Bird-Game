@@ -71,6 +71,9 @@ window.onload = function () {
     var playNow = document.getElementById("playNow")
 
     var startButton = document.getElementById("startButton");
+    
+    var modal = document.getElementById("leaderboardModal");
+    modal.style.display="none"
 
     function showLoginModal() {
         loginModal.style.display = "block";
@@ -97,6 +100,8 @@ window.onload = function () {
     }
 
     function startGame() {
+        var modal = document.getElementById("leaderboardModal");
+        modal.style.display="none"
         hideProfileModal()
         // Rest of your game initialization code...
         document.getElementById("startButtonContainer").style.display = "none";
@@ -157,7 +162,7 @@ window.onload = function () {
                     .then(response => response.json())
                     .then((data) => {
                         console.log("------------------------",data)
-                        if(data.message === "Email already registered"){
+                        if(data.message === "User already registered"){
                             hideLoginModal(); // Hide the modal after successful connection
                             showProfileModal()
                             playNow.addEventListener("click", startGame);            
@@ -277,6 +282,8 @@ function update() {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data["0"]);
+                var modal = document.getElementById("leaderboardModal");
+                modal.style.display="block"
                 // displayLeaderboard(data["0"]);
             })
             .catch((error) => {
