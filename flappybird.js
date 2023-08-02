@@ -59,12 +59,16 @@ function closePopup() {
 //     showModal()
 // }
 window.onload = function () {
+
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
 
     var createModal = document.getElementById("create");
     var createAccount = document.getElementById("CreateAccount")
+
+    var profileModal = document.getElementById("profile")
+    var playNow = document.getElementById("playNow")
 
     var startButton = document.getElementById("startButton");
 
@@ -84,7 +88,16 @@ window.onload = function () {
         createModal.style.display = "none";
     }
 
+    function showProfileModal() {
+        profileModal.style.display = "block";
+    }
+    // Function to hide the modal
+    function hideProfileModal() {
+        profileModal.style.display = "none";
+    }
+
     function startGame() {
+        hideProfileModal()
         // Rest of your game initialization code...
         document.getElementById("startButtonContainer").style.display = "none";
         requestAnimationFrame(update);
@@ -92,37 +105,50 @@ window.onload = function () {
         document.addEventListener("keydown", moveBird);
         document.addEventListener("touchstart", moveBird);
     }
-    // function createAcc() {
 
-    //     // Get the input field values
-    //     const nameInput = document.getElementById('name');
-    //     const emailInput = document.getElementById('email');
+    function createAcc() {
+        var name = "";
+        var email = "";
+        // Get the input field values
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
 
-    //     const name = nameInput.value;
-    //     const email = emailInput.value;
+        var name = nameInput.value;
+        var email = emailInput.value;
 
-    //     // Send the wallet address to the backend.
-    //     fetch('https://qr-code-api.oasisx.world/flappy-save', {
-    //         method: 'POST',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify({ walletAddress: `${accounts[0]}`, name, email })
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => console.log(data))
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
-    // }
+        if(name.length > 0){
+            createAccount.disabled = false;
+            // Send the wallet address to the backend.
+            fetch('https://qr-code-api.oasisx.world/flappy-save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ walletAddress: `${accounts[0]}`, name, email })
+            })
+            .then(response => response.json())
+            .then((data) =>{
+                console.log("___________________",data)
+                hideCreateModal()
+                showProfileModal()
+                playNow.addEventListener("click", startGame);
+
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    }
+
     function connectWallet() {
         // Request account access
         ethereum.request({ method: "eth_requestAccounts" })
             .then(function (accounts) {
+
                 walletAddress = accounts[0]
+
                 // Account connected successfully
                 console.log("Wallet connected:", accounts[0]);
 
 
-                hideLoginModal(); // Hide the modal after successful connection
                 // Send the wallet address to the backend.
                 fetch('https://qr-code-api.oasisx.world/flappy-save', {
                     method: 'POST',
@@ -130,7 +156,18 @@ window.onload = function () {
                     body: JSON.stringify({ walletAddress: `${accounts[0]}`})
                 })
                     .then(response => response.json())
-                    .then(data => console.log("------------------------",data))
+                    .then((data) => {
+                        console.log("------------------------",data)
+                        if(data.message === "Email already registered"){
+                            hideLoginModal(); // Hide the modal after successful connection
+                            showProfileModal()
+                            playNow.addEventListener("click", startGame);            
+                        }else {
+                            hideLoginModal(); // Hide the modal after successful connection
+                            showCreateModal()         
+                            createAccount.addEventListener("click", createAcc);
+                        }
+                    })
                     .catch((error) => {
                         console.error('Error:', error);
                     });
@@ -142,7 +179,6 @@ window.onload = function () {
                 // Error occurred while connecting the wallet
                 console.error("Wallet connection error:", error);
             });
-
     }
 
 
