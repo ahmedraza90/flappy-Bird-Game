@@ -121,7 +121,7 @@ window.onload = function () {
             fetch('https://qr-code-api.oasisx.world/flappy-save', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ walletAddress: `${accounts[0]}`, name, email })
+                body: JSON.stringify({ walletAddress, name, email })
             })
             .then(response => response.json())
             .then((data) =>{
