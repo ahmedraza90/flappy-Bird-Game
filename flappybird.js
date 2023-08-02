@@ -117,7 +117,6 @@ window.onload = function () {
         var email = emailInput.value;
 
         if(name.length > 0){
-            createAccount.disabled = false;
             // Send the wallet address to the backend.
             fetch('https://qr-code-api.oasisx.world/flappy-save', {
                 method: 'POST',
