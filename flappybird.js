@@ -277,7 +277,7 @@ function update() {
             .then(response => response.json())
             .then(data => {
                 console.log('Success:', data["0"]);
-                displayLeaderboard(data["0"]);
+                // displayLeaderboard(data["0"]);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -348,51 +348,51 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
     return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
 }
 
-function displayLeaderboard(data) {
-    const leaderboardBody = document.getElementById('leaderboardBody');
+// function displayLeaderboard(data) {
+//     const leaderboardBody = document.getElementById('leaderboardBody');
 
-    // Clear old leaderboard data
-    leaderboardBody.innerHTML = '';
+//     // Clear old leaderboard data
+//     leaderboardBody.innerHTML = '';
 
-    // Create rows for the leaderboard table using the data
-    let dataRows = data.map((item, index) =>
-        `<tr>
-          <td>${index + 1}</td>
-          <td>${compressAddress(item.walletAddress, 6, 0)}</td>
-          <td>${item.score}</td>
-       </tr>`
-    ).join('');
+//     // Create rows for the leaderboard table using the data
+//     let dataRows = data.map((item, index) =>
+//         `<tr>
+//           <td>${index + 1}</td>
+//           <td>${compressAddress(item.walletAddress, 6, 0)}</td>
+//           <td>${item.score}</td>
+//        </tr>`
+//     ).join('');
 
-    // Insert the new rows
-    leaderboardBody.innerHTML = dataRows;
+//     // Insert the new rows
+//     leaderboardBody.innerHTML = dataRows;
 
-    // Get the modal
-    var modal = document.getElementById("leaderboardModal");
+//     // Get the modal
+//     var modal = document.getElementById("leaderboardModal");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementById("closeLeaderboardModal");
+//     // Get the <span> element that closes the modal
+//     var span = document.getElementById("closeLeaderboardModal");
 
-    // Show the modal
-    modal.style.display = "block";
-    openPopup()
+//     // Show the modal
+//     modal.style.display = "block";
+//     openPopup()
 
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-        closePopup();
-    }
+//     // When the user clicks on <span> (x), close the modal
+//     span.onclick = function () {
+//         modal.style.display = "none";
+//         closePopup();
+//     }
 
-    // When the user clicks anywhere outside of the modal, close it
-    // window.onclick = function(event) {
-    //   if (event.target == modal) {
-    //     modal.style.display = "none";
-    //   }
-    // }
+//     // When the user clicks anywhere outside of the modal, close it
+//     // window.onclick = function(event) {
+//     //   if (event.target == modal) {
+//     //     modal.style.display = "none";
+//     //   }
+//     // }
 
-    const restartButton = document.getElementById("restartButton");
+//     const restartButton = document.getElementById("restartButton");
 
-    restartButton.addEventListener("click", function () {
-        modal.style.display = "none";
-        closePopup();
-    });
-}
+//     restartButton.addEventListener("click", function () {
+//         modal.style.display = "none";
+//         closePopup();
+//     });
+// }
