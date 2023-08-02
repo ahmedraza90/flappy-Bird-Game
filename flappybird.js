@@ -125,14 +125,15 @@ window.onload = function () {
                 hideLoginModal(); // Hide the modal after successful connection
                 // Send the wallet address to the backend.
                 fetch('https://qr-code-api.oasisx.world/flappy-save', {
-                    method: 'GET',
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ walletAddress: `${accounts[0]}`, name, email })
                 })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch((error) => {
+                    .then(response => response.json())
+                    .then(data => console.log("------------------------",data))
+                    .catch((error) => {
                         console.error('Error:', error);
-                });
+                    });
                 // showCreateModal()
                 // createAccount.addEventListener("click", createAcc);
 
