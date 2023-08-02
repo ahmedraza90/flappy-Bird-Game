@@ -52,25 +52,25 @@ function closePopup() {
     // TODO: Add your logic here to hide the popup...
 }
 // window.onload = function () {
-//     var modal = document.getElementById("myModal");
+//     var modal = document.getElementById("create");
 //     function showModal() {
 //         modal.style.display = "block";
 //     }
 //     showModal()
 // }
 window.onload = function () {
-    var modal = document.getElementById("myModal");
+    var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
     
     var startButton = document.getElementById("startButton");
 
-    function showModal() {
-        modal.style.display = "block";
+    function showLoginModal() {
+        loginModal.style.display = "block";
     }
     // Function to hide the modal
-    function hideModal() {
-        modal.style.display = "none";
+    function hideLoginModal() {
+        loginModal.style.display = "none";
     }
 
 
@@ -102,7 +102,7 @@ window.onload = function () {
                         console.error('Error:', error);
                 });
 
-                hideModal(); // Hide the modal after successful connection
+                hideLoginModal(); // Hide the modal after successful connection
                 startButton.addEventListener("click", startGame);
                 startButton.addEventListener("touchstart", startGame);
                 // startGame()
@@ -142,13 +142,13 @@ window.onload = function () {
             startButton.addEventListener("touchstart", startGame);
         } else {
             connectButton.style.display = "block"
-            showModal()
+            showLoginModal()
             connectButton.addEventListener("click", connectWallet);
             startButton.addEventListener("touchstart", connectWallet);
         }
     } else {
         NometaMask.style.display = "block"
-        showModal()
+        showLoginModal()
         console.log("please install metamask")
     }
 }
