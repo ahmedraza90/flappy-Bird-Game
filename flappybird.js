@@ -62,6 +62,7 @@ window.onload = function () {
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
+    var createModal = document.getElementById("create");
     
     var startButton = document.getElementById("startButton");
 
@@ -73,6 +74,13 @@ window.onload = function () {
         loginModal.style.display = "none";
     }
 
+    function showCreateModal() {
+        createModal.style.display = "block";
+    }
+    // Function to hide the modal
+    function hideCreateModal() {
+        createModal.style.display = "none";
+    }
 
     function startGame() {
         // Rest of your game initialization code...
@@ -103,6 +111,7 @@ window.onload = function () {
                 });
 
                 hideLoginModal(); // Hide the modal after successful connection
+                showCreateModal()
                 startButton.addEventListener("click", startGame);
                 startButton.addEventListener("touchstart", startGame);
                 // startGame()
