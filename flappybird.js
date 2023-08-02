@@ -62,8 +62,10 @@ window.onload = function () {
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
+
     var createModal = document.getElementById("create");
-    
+    var createAccount = document.getElementById("CreateAccount")
+
     var startButton = document.getElementById("startButton");
 
     function showLoginModal() {
@@ -90,6 +92,27 @@ window.onload = function () {
         document.addEventListener("keydown", moveBird);
         document.addEventListener("touchstart", moveBird);
     }
+    // function createAcc() {
+
+    //     // Get the input field values
+    //     const nameInput = document.getElementById('name');
+    //     const emailInput = document.getElementById('email');
+
+    //     const name = nameInput.value;
+    //     const email = emailInput.value;
+
+    //     // Send the wallet address to the backend.
+    //     fetch('https://qr-code-api.oasisx.world/flappy-save', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify({ walletAddress: `${accounts[0]}`, name, email })
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => console.log(data))
+    //         .catch((error) => {
+    //             console.error('Error:', error);
+    //         });
+    // }
     function connectWallet() {
         // Request account access
         ethereum.request({ method: "eth_requestAccounts" })
@@ -98,23 +121,21 @@ window.onload = function () {
                 // Account connected successfully
                 console.log("Wallet connected:", accounts[0]);
 
-                // Send the wallet address to the backend
+
+                hideLoginModal(); // Hide the modal after successful connection
+                // Send the wallet address to the backend.
                 fetch('https://qr-code-api.oasisx.world/flappy-save', {
-                    method: 'POST',
+                    method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ walletAddress: `${accounts[0]}` })
                 })
                 .then(response => response.json())
                 .then(data => console.log(data))
                 .catch((error) => {
                         console.error('Error:', error);
                 });
+                // showCreateModal()
+                // createAccount.addEventListener("click", createAcc);
 
-                hideLoginModal(); // Hide the modal after successful connection
-                showCreateModal()
-                startButton.addEventListener("click", startGame);
-                startButton.addEventListener("touchstart", startGame);
-                // startGame()
             })
             .catch(function (error) {
                 // Error occurred while connecting the wallet
@@ -145,7 +166,7 @@ window.onload = function () {
     // startButton.addEventListener("click", startGame);
     // startButton.addEventListener("touchstart", startGame);
     if (typeof window.ethereum !== "undefined") {
-        console.log("***************",ethereum.selectedAddress)
+        console.log("***************", ethereum.selectedAddress)
         if (ethereum.selectedAddress !== null) {
             startButton.addEventListener("click", startGame);
             startButton.addEventListener("touchstart", startGame);
@@ -208,7 +229,7 @@ function update() {
 
 
     if (gameOver) {
-        
+
         // // Make a POST request to your backend API
         fetch('https://qr-code-api.oasisx.world/flappy-update', {
             method: 'POST',
@@ -217,15 +238,15 @@ function update() {
             },
             body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data["0"]);
-            displayLeaderboard(data["0"]);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-        
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data["0"]);
+                displayLeaderboard(data["0"]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
         return;
     }
 }
@@ -293,50 +314,49 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
 
 function displayLeaderboard(data) {
     const leaderboardBody = document.getElementById('leaderboardBody');
-  
+
     // Clear old leaderboard data
     leaderboardBody.innerHTML = '';
-  
+
     // Create rows for the leaderboard table using the data
     let dataRows = data.map((item, index) =>
-      `<tr>
+        `<tr>
           <td>${index + 1}</td>
           <td>${compressAddress(item.walletAddress, 6, 0)}</td>
           <td>${item.score}</td>
        </tr>`
     ).join('');
-  
+
     // Insert the new rows
     leaderboardBody.innerHTML = dataRows;
-  
+
     // Get the modal
     var modal = document.getElementById("leaderboardModal");
-  
+
     // Get the <span> element that closes the modal
     var span = document.getElementById("closeLeaderboardModal");
-  
+
     // Show the modal
     modal.style.display = "block";
     openPopup()
-  
+
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-      closePopup();
+    span.onclick = function () {
+        modal.style.display = "none";
+        closePopup();
     }
-  
+
     // When the user clicks anywhere outside of the modal, close it
     // window.onclick = function(event) {
     //   if (event.target == modal) {
     //     modal.style.display = "none";
     //   }
     // }
-  
+
     const restartButton = document.getElementById("restartButton");
-    
+
     restartButton.addEventListener("click", function () {
-      modal.style.display = "none";
-      closePopup();
+        modal.style.display = "none";
+        closePopup();
     });
 }
-  
