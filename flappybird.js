@@ -5,8 +5,8 @@ let boardHeight = 640;
 let context;
 
 //bird
-let birdWidth = 34; //width/height ratio = 408/228 = 17/12
-let birdHeight = 24;
+let birdWidth = 44; //width/height ratio = 408/228 = 17/12
+let birdHeight = 34;
 let birdX = boardWidth / 8;
 let birdY = boardHeight / 2;
 let birdImg;
@@ -46,7 +46,7 @@ window.onload = function () {
 
     //load images
     birdImg = new Image();
-    birdImg.src = "./PEPE.svg";
+    birdImg.src = "./PEPE.png";
     birdImg.onload = function () {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
