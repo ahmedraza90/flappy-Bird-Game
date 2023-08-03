@@ -283,4 +283,25 @@ hr {
 
 
 
+/* Scrollbar track */
+#leaderboardBody::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+/* Scrollbar handle */
+#leaderboardBody::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar handle */
+  border-radius: 0px; /* Rounded corners */
+}
+
+/* Scrollbar track on hover */
+#leaderboardBody::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar handle on hover */
+}
+
+/* Scrollbar corner (where vertical and horizontal scrollbars meet) */
+#leaderboardBody::-webkit-scrollbar-corner {
+  background-color: transparent; /* Color of the scrollbar corner */
+}
+
 

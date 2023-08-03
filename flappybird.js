@@ -10,7 +10,6 @@ let birdHeight = 24;
 let birdX = boardWidth / 8;
 let birdY = boardHeight / 2;
 let birdImg;
-
 let bird = {
     x: birdX,
     y: birdY,
@@ -24,169 +23,22 @@ let pipeWidth = 64; //width/height ratio = 384/3072 = 1/8
 let pipeHeight = 512;
 let pipeX = boardWidth;
 let pipeY = 0;
-
 let topPipeImg;
 let bottomPipeImg;
+let pipeInterval;
 
 //physics
 let velocityX = -2; //pipes moving left speed
 let velocityY = 0; //bird jump speed
 let gravity = 0.4;
-
 let gameOver = false;
 let score = 0;
 let gamestart = false
 let walletConnect = false
 let walletAddress = ""
-let isModalOpen = false;
 
-// When opening popup
-function openPopup() {
-    isModalOpen = true;
-    // TODO: Add your logic here to display the popup...
-}
 
-// When closing popup
-function closePopup() {
-    isModalOpen = false;
-    // TODO: Add your logic here to hide the popup...
-}
-// window.onload = function () {
-//     var modal = document.getElementById("create");
-//     function showModal() {
-//         modal.style.display = "block";
-//     }
-//     showModal()
-// }
 window.onload = function () {
-
-    var loginModal = document.getElementById("myModal");
-    var NometaMask = document.getElementById("NometaMask")
-    var connectButton = document.getElementById("connectButton");
-
-    var createModal = document.getElementById("create");
-    var createAccount = document.getElementById("CreateAccount")
-
-    var profileModal = document.getElementById("profile")
-    var playNow = document.getElementById("playNow")
-
-    var startButton = document.getElementById("startButton");
-    
-    var modal = document.getElementById("leaderboardModal");
-    modal.style.display="none"
-
-    function showLoginModal() {
-        loginModal.style.display = "block";
-    }
-    // Function to hide the modal
-    function hideLoginModal() {
-        loginModal.style.display = "none";
-    }
-
-    function showCreateModal() {
-        createModal.style.display = "block";
-    }
-    // Function to hide the modal
-    function hideCreateModal() {
-        createModal.style.display = "none";
-    }
-
-    function showProfileModal() {
-        profileModal.style.display = "block";
-    }
-    // Function to hide the modal
-    function hideProfileModal() {
-        profileModal.style.display = "none";
-    }
-
-    function startGame() {
-        var modal = document.getElementById("leaderboardModal");
-        modal.style.display="none"
-        hideProfileModal()
-        startButton.style.display = 'none'
-        // Rest of your game initialization code...
-        // document.getElementById("startButtonContainer").style.display = "none";
-        requestAnimationFrame(update);
-        setInterval(placePipes, 1500); //every 1.5 seconds
-        document.addEventListener("keydown", moveBird);
-        document.addEventListener("touchstart", moveBird);
-    }
-
-    function createAcc() {
-        var name = "";
-        var email = "";
-        // Get the input field values
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-
-        var name = nameInput.value;
-        var email = emailInput.value;
-
-        if(name.length > 0){
-            // Send the wallet address to the backend.
-            fetch('https://qr-code-api.oasisx.world/flappy-save', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ walletAddress, name, email })
-            })
-            .then(response => response.json())
-            .then((data) =>{
-                console.log("___________________",data)
-                hideCreateModal()
-                showProfileModal()
-                playNow.addEventListener("click", startGame);
-
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    }
-
-    function connectWallet() {
-        // Request account access
-        ethereum.request({ method: "eth_requestAccounts" })
-            .then(function (accounts) {
-
-                walletAddress = accounts[0]
-
-                // Account connected successfully
-                console.log("Wallet connected:", accounts[0]);
-
-
-                // Send the wallet address to the backend.
-                fetch('https://qr-code-api.oasisx.world/flappy-save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ walletAddress: `${accounts[0]}`})
-                })
-                    .then(response => response.json())
-                    .then((data) => {
-                        console.log("------------------------",data)
-                        if(data.message === "User already registered"){
-                            hideLoginModal(); // Hide the modal after successful connection
-                            showProfileModal()
-                            playNow.addEventListener("click", startGame);            
-                        }else {
-                            hideLoginModal(); // Hide the modal after successful connection
-                            showCreateModal()         
-                            createAccount.addEventListener("click", createAcc);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-                // showCreateModal()
-                // createAccount.addEventListener("click", createAcc);
-
-            })
-            .catch(function (error) {
-                // Error occurred while connecting the wallet
-                console.error("Wallet connection error:", error);
-            });
-    }
-
-
     board = document.getElementById("board");
     board.height = boardHeight;
     board.width = boardWidth;
@@ -194,7 +46,7 @@ window.onload = function () {
 
     //load images
     birdImg = new Image();
-    birdImg.src = "./flappybird.png";
+    birdImg.src = "./PEPE.svg";
     birdImg.onload = function () {
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
@@ -204,33 +56,140 @@ window.onload = function () {
 
     bottomPipeImg = new Image();
     bottomPipeImg.src = "./bottompipe.png";
+    start()
+}
+function start() {
+    var loginModal = document.getElementById("myModal");
+    var NometaMask = document.getElementById("NometaMask")
+    var connectButton = document.getElementById("connectButton");
 
-    // startButton.addEventListener("click", startGame);
-    // startButton.addEventListener("touchstart", startGame);
     if (typeof window.ethereum !== "undefined") {
-        console.log("***************", ethereum.selectedAddress)
-        if (ethereum.selectedAddress !== null) {
-            startButton.addEventListener("click", startGame);
-            startButton.addEventListener("touchstart", startGame);
-        } else {
-            connectButton.style.display = "block"
-            showLoginModal()
-            connectButton.addEventListener("click", connectWallet);
-            connectButton.addEventListener("touchstart", connectWallet);
-        }
+        connectButton.style.display = "block"
+        loginModal.style.display = 'block'
+        connectButton.addEventListener("click", connectWallet);
+        connectButton.addEventListener("touchstart", connectWallet);
+
     } else {
         NometaMask.style.display = "block"
-        showLoginModal()
+        loginModal.style.display = 'block'
         console.log("please install metamask")
     }
 }
+function connectWallet() {
+    var loginModal = document.getElementById("myModal");
+    var profileModal = document.getElementById("profile")
+    var playNow = document.getElementById("playNow")
+    var createModal = document.getElementById("create");
+    var createAccount = document.getElementById("CreateAccount")
+    var leaderButton = document.getElementById('leaderButton')
 
-function update() {
+
+    
+
+    // Request account access
+    ethereum.request({ method: "eth_requestAccounts" })
+        .then(function (accounts) {
+
+            walletAddress = accounts[0]
+
+            // Account connected successfully
+            console.log("Wallet connected:", accounts[0]);
+
+            // Send the wallet address to the backend.
+            fetch('https://qr-code-api.oasisx.world/flappy-save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ walletAddress: `${accounts[0]}` })
+            })
+                .then(response => response.json())
+                .then((data) => {
+                    loginModal.style.display = 'none'
+                    if (data.message === "User already registered") {
+                        profileModal.style.display = 'block'
+                        playNow.addEventListener("click", startGame);
+                        leaderButton.addEventListener("click", gameover);
+
+                    } else {
+                        createModal.style.display = 'block'
+                        createAccount.addEventListener("click", createAcc);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
+        .catch(function (error) {
+            // Error occurred while connecting the wallet
+            console.error("Wallet connection error:", error);
+        });
+}
+function createAcc() {
+    var name = "";
+    var email = "";
+    // Get the input field values
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    var createModal = document.getElementById("create");
+    var profileModal = document.getElementById("profile")
+    var playNow = document.getElementById("playNow")
+
+    var name = nameInput.value;
+    var email = emailInput.value;
+
+    if (name.length > 0) {
+        // Send the wallet address to the backend.
+        fetch('https://qr-code-api.oasisx.world/flappy-save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ walletAddress, name, email })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                createModal.style.display = "none";
+                profileModal.style.display = "block";
+                playNow.addEventListener("click", startGame);
+
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+}
+function startGame() {
+    var leaderboardModal = document.getElementById("leaderboardModal");
+    var profileModal = document.getElementById("profile")
+    var playNow = document.getElementById("playNow");
+    var leaderButton = document.getElementById('leaderButton')
+
+
+
+    leaderboardModal.style.display = "none"
+    profileModal.style.display = "none";
+    
+
+    // Clear previous interval if it exists
+    if (pipeInterval) {
+        clearInterval(pipeInterval);
+    }
+    // Reset the pipeArray and score
+    gameOver = false
 
     requestAnimationFrame(update);
+    pipeInterval = setInterval(placePipes, 1500); //every 1.5 seconds
+
+    document.addEventListener("keydown", moveBird);
+    document.addEventListener("touchstart", moveBird);
+    playNow.addEventListener("click", startGame);
+    leaderButton.addEventListener("click", gameover);
+
+}
+function update() {
+
     if (gameOver) {
         return;
     }
+    requestAnimationFrame(update);
+
     context.clearRect(0, 0, board.width, board.height);
 
     //bird
@@ -265,41 +224,46 @@ function update() {
     }
 
     //score
-    context.fillStyle = "white";
-    context.font = "45px sans-serif";
+    context.fillStyle = "black";
+    context.font = "45px 'Silkscreen', cursive";
     context.fillText(score, 5, 45);
-
 
     if (gameOver) {
 
-        // // Make a POST request to your backend API
-        fetch('https://qr-code-api.oasisx.world/flappy-update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data["0"]);
-                // var modal = document.getElementById("leaderboardModal");
-                // modal.style.display="block"
-                displayLeaderboard(data["0"]);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
+        bird.y = birdY;
+        pipeArray = [];
+        velocityY = 0; // Reset the vertical velocity to zero
+        velocityX = -2; //pipes moving left speed
+        gravity = 0.4;    // Hide the leaderboard modal
+        gameover()
         return;
     }
 }
-function resetGame() {
-    var modal = document.getElementById("leaderboardModal");
-    modal.style.display = 'none'
-    location.reload() 
-}
+function gameover() {
 
+    // // Make a POST request to your backend API
+    fetch('https://qr-code-api.oasisx.world/flappy-update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data["0"]);
+            displayLeaderboard(data["0"]);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+function resetGame() {
+    gameOver = false;
+    var modal = document.getElementById("leaderboardModal");
+    modal.style.display = 'none';
+
+}
 function placePipes() {
     if (gameOver) {
         return;
@@ -331,70 +295,59 @@ function placePipes() {
     }
     pipeArray.push(bottomPipe);
 }
-
 function moveBird(e) {
-    if (isModalOpen) {
-        return;
-    }
-    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" || e.type === "touchstart") {
-        //jump
-        velocityY = -6;
 
-        //reset game
-        if (gameOver) {
-            bird.y = birdY;
-            pipeArray = [];
-            score = 0;
-            gameOver = false;
-            velocityY = 0; // Reset the vertical velocity to zero
+    if (!gameOver) {
+        if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" || e.type === "touchstart") {
+            //jump
+            velocityY = -6;
         }
     }
 }
-
 function detectCollision(a, b) {
     return a.x < b.x + b.width &&   //a's top left corner doesn't reach b's top right corner
         a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
         a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
         a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
-
 function compressAddress(address, visibleCharStart, visibleCharEnd, separator = '...') {
     return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
 }
-
 function displayLeaderboard(data) {
-    const leaderboardBody = document.getElementById('leaderboardBody');
 
+    score = 0;
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    var modal = document.getElementById("leaderboardModal");
+    const backProfile = document.getElementById('backProfile')
+    var profileModal = document.getElementById("profile")
+    
+    
+    
     // Clear old leaderboard data
     leaderboardBody.innerHTML = '';
-
+    
     // Create rows for the leaderboard table using the data
-    let dataRows = data.map((item, index) =>
-        `<tr>
-          <td>${index + 1}</td>
-          <td>${compressAddress(item.walletAddress, 6, 0)}</td>
-          <td>${item.score}</td>
-       </tr>`
+    let dataRows = data.map((item, index) => {
+        
+        
+        return `
+        <p style="margin: 0; color: rgb(57, 130, 0);"><span>${index + 1}</span>#<span>${item.userName}</span></p>
+        <p style="margin: 0%; color: #f2f2f2;">${item.score}</p>
+        <hr style="margin: 15px auto 15px auto; border-color: rgb(57, 130, 0); width: 100%;">
+        `
+    }
     ).join('');
-
     // Insert the new rows
     leaderboardBody.innerHTML = dataRows;
+    
 
-    // Get the modal
-    var modal = document.getElementById("leaderboardModal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementById("closeLeaderboardModal");
-
-    // Show the modal
+    profileModal.style.display = "none";
     modal.style.display = "block";
-    openPopup()
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-        closePopup();
-    }
+    // span.onclick = function () {
+    //     modal.style.display = "none";
+    // }
 
     // When the user clicks anywhere outside of the modal, close it
     // window.onclick = function(event) {
@@ -403,7 +356,9 @@ function displayLeaderboard(data) {
     //   }
     // }
 
-    const restartButton = document.getElementById("restartButton");
 
-    restartButton.addEventListener("click", resetGame);
+    backProfile.addEventListener('click', () => {
+        modal.style.display = 'none'
+        profileModal.style.display = 'block'
+    })
 }

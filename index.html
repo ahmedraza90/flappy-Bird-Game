@@ -116,36 +116,42 @@
                     <hr style="margin-top: 25px; border-color: #f2f2f2;">
                     <p style="width: 100%; font-size: small; color: #f2f2f2;">CREATED AND POWERED BY: OASISX</p>
                 </div>
-
             </div>
-
         </div>
     </div>
 
     <canvas id="board"></canvas>
-    <div id="startButtonContainer">
-        <button id="startButton">Start Game</button>
-    </div>
-    
-    <div id="leaderboardModal" class="modal">
+
+    <div id="leaderboardModal" class="login">
         <div class="modal-content">
-            <span id="closeLeaderboardModal" class="close">&times;</span>
-            <h2>Leaderboard</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>WalletAddress</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboardBody">
-                    <!-- Leaderboard data will be inserted here -->
-                </tbody>
-            </table>
-            <button id="restartButton" class="restart">Restart Game</button>
+            <div style="margin: 10px 30px; width: 350px;  ">
+                <div style="display: flex; justify-content: space-between; padding: 15px 0px;">
+                    <img  style="width: 30%" src="./PE1PE.png" alt="loading ..">
+                    <button id="connectButton" ><p>Disconnect</p></button>
+                </div>
+                <hr style="margin: 0px auto 15px auto; border-color: #f2f2f2;">
+                <div style="display: flex; justify-content: space-between; column-gap: 200px; row-gap: 0px; flex-wrap: wrap;">
+                    <p style="margin: 0;">LEADERBOARD</p>
+                </div>
+                <hr style="margin: 15px auto 15px auto; border-color: #f2f2f2;">
+
+                <div id="leaderboardBody" style="display: flex; justify-content: space-between;  flex-wrap: wrap; height: 300px; overflow-y: auto;">
+                </div>
+                <div style="margin: 0 auto;">
+                    <p style="color: #f2f2f2;"> DEADLINE: AUGUST 30, 2023</p>
+                </div>
+                <div style="margin: 0 auto 20px auto; ">
+                    <!-- <button id="playAgain" style="width: 50%; margin: 10px auto; background-color: red; color: white;  font-family: 'Silkscreen', cursive; border: 0; font-size: 20px; padding: 7px">PLAY AGAIN</button> -->
+                    <button id="backProfile" style="width: 50%; margin: 0 auto 10px auto; font-family: 'Silkscreen', cursive; font-size: 20px; background: none; background-color: green; border: 0; font-size: small; padding: 10px">Back To Profile</button>
+                </div>
+                <div style="margin: 0 auto;">
+                    <hr style="margin-top: 25px; border-color: #f2f2f2;">
+                    <p style="width: 100%; font-size: small; color: #f2f2f2;">CREATED AND POWERED BY: OASISX</p>
+                </div>
+            </div>
         </div>
     </div>
+    
     
 </body>
 
