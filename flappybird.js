@@ -141,7 +141,7 @@ function createAcc() {
         fetch('https://qr-code-api.oasisx.world/flappy-save', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ walletAddress, name, email })
+            body: JSON.stringify({ walletAddress, userName: name, email })
         })
             .then(response => response.json())
             .then((data) => {
