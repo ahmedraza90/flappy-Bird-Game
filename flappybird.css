@@ -320,10 +320,23 @@ hr {
   margin: 5% 60px;
 }
 
+.profileHeader {
+  margin: 10px 30px; 
+  width: 350px;
+}
+
 @media screen and (max-width: 767px) {
   .flappyBird {
     color: #f2f2f2;
-    font-size: 200%;
+    font-size: 210%;
     margin: 5% 60px;
   }
+  .modal-content {
+    padding: 0px;
+  }
+  .profileHeader {
+    margin: 10px 30px; 
+    width: 320px;
+  }
+  
 }
