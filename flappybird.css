@@ -237,7 +237,7 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 13%;
+  margin-top: 4%;
   padding: 5px;
   width: fit-content;
   height: fit-content;
@@ -254,8 +254,8 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 5%;
-  padding: 5px;
+  margin-top: 8.2%;
+  padding: 5px 20px;
   width: 20%;
   height: fit-content;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -271,7 +271,7 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 5%;
+  margin-top: 15%;
   padding: 5px;
   width: 20%;
   height: fit-content;
@@ -327,13 +327,17 @@ hr {
     padding: 5px 10px;
   }
   .leader-content {
-    margin-top: 10%;
+    margin-top: 50%;
     width: 87%;
     padding: 5px 10px;
+  }
+  .login-content{
+    margin-top: 13%;
   }
   .profileHeader {
     margin: 10px 30px; 
     width: 280px;
+    margin-top: 5%;
   }
   .billion {
     font-size: 35px;
