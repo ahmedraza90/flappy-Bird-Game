@@ -54,29 +54,21 @@
         <div class="profile-content">
             <div style="display: flex; justify-content: space-between; padding: 15px 0px; width: 100%; margin: 0 0px 0 0px;">
                 <img style="width: 25%; height: 70px;" src="./PE1PE.png" alt="loading ..">
-                <button id="connectButton">
+                <button id="DisconnectButton">
                     <p>Disconnect</p>
                 </button>
             </div>
             <hr style="margin: 0px auto 15px auto; border-color: #f2f2f2;">
             <div
                 style="display: flex; justify-content: space-between; column-gap: 200px; row-gap: 0px; flex-wrap: wrap;">
-                <p style="margin: 0;">h</p>
+                <p id="userName" style="margin: 0;"></p>
                 <a style="margin: 0; color: rgb(57, 130, 0);">edit</a>
-                <p style="margin: 0%; color: #f2f2f2;">h</p>
+
             </div>
-            <div
-                style="display: flex; flex-direction: column; align-items: flex-start; margin: 10px 0px; color: #f2f2f2;">
-                <p style="margin: 0;">@JOHNDOETWITTER</p>
-                <p style="margin: 0;">JOHNDOE@GMAIL.COM</p>
-                <p style="margin: 0%;">0xfd456hgy7sjf78ajnfja76t...</p>
+            <div id="user" style="display: flex; flex-direction: column; align-items: flex-start; margin: 10px 0px; color: #f2f2f2;">
             </div>
             <hr>
-            <div style="display: flex; flex-direction: column; align-items: flex-start; margin: 0px 0px;">
-                <p style="margin: 0;"> <span style="color: rgb(57, 130, 0);">TOP SCORE RANK</span><span
-                        style="color: #f2f2f2;"> 76 </span></p>
-                <p style="margin: 0;"><span style="color: rgb(57, 130, 0);">RANK</span><span style="color: #f2f2f2;"> #
-                        13</span></p>
+            <div id="topScore" style="display: flex; flex-direction: column; align-items: flex-start; margin: 0px 0px;">
             </div>
             <hr>
             <div style="margin: 0 auto;">
@@ -103,50 +95,46 @@
             </div>
         </div>
     </div>
-    <div id="create" class="create">
-        <div class="create-content">
-            <div style="margin: 10px 30px; width: 350px;  ">
-                <div style="display: flex; justify-content: space-between; padding: 15px 0px;">
-                    <img style="width: 30%" src="./PE1PE.png" alt="loading ..">
-                    <button id="connectButton">
-                        <p>Disconnect</p>
-                    </button>
-                </div>
-                <hr style="margin: 0px auto 15px auto; border-color: #f2f2f2;">
-                <div>
-                    <input id="name" class="input" type="text" placeholder="Username" id="username" name="username"
-                        style=" outline: none; width: 100%; border-top: none; border-left: none; border-right: none;  background: none; margin: 20px auto;">
-                    <input id="email" class="input" type="text" placeholder="Email (optional)" id="username"
-                        name="username"
-                        style="width: 100%; border-top: none; border-left: none; border-right: none; margin: 20px auto; background: none;">
-                </div>
-                <div style="margin: 0 auto 30px auto; ">
-                    <button id="CreateAccount"
-                        style="width: 50%; margin: 30px auto 20px auto; background-color: white; color: black;  font-family: 'Silkscreen', cursive; border: 0; font-size: 20px;">CREATE
-                        ACCOUNT</button>
-                    <br>
-                    <span style="width: 100%; font-size: small; color: #f2f2f2;">your information will remain
-                        private.</span>
-                    <br>
-                    <span style="width: 100%; font-size: small; color: #f2f2f2;">others users will only be able to view
-                        your username.</span>
-                </div>
-                <div style="margin: 0 auto;">
-                    <hr style="margin-top: 25px; border-color: #f2f2f2;">
-                    <p style="width: 100%; font-size: small; color: #f2f2f2;">CREATED AND POWERED BY: OASISX</p>
-                </div>
+    <div id="create" class="login">
+        <div class="profile-content">
+            <div style="display: flex; justify-content: space-between; padding: 15px 0px; width: 100%; margin: 0 0px 0 0px;">
+                <img style="width: 30%;" src="./PE1PE.png" alt="loading ..">
+                <button id="DisconnectButton">
+                    <p>Disconnect</p>
+                </button>
+            </div>
+            <hr style="margin: 0px auto 15px auto; border-color: #f2f2f2;">
+            <div>
+                <input id="name" class="input" type="text" placeholder="Username" id="username" name="username"
+                    style=" outline: none; width: 100%; border-top: none; border-left: none; border-right: none;  background: none; margin: 20px auto;">
+                <input id="email" class="input" type="text" placeholder="Email (optional)" id="username"
+                    name="username"
+                    style="width: 100%; border-top: none; border-left: none; border-right: none; margin: 20px auto; background: none;">
+            </div>
+            <div style="margin: 0 auto 0px auto; padding: 0;">
+                <button id="CreateAccount"
+                    style="width: 50%; margin: 30px auto 20px auto; background-color: white; color: black;  font-family: 'Silkscreen', cursive; border: 0; font-size: 20px;">CREATE
+                    ACCOUNT</button>
+                <br>
+                <span style="width: 100%; font-size: small; color: #f2f2f2;">your information will remain private.</span>
+                <br>
+                <span style="width: 100%; font-size: small; color: #f2f2f2;">others users will only be able to view
+                    your username.</span>
+            </div>
+      
+            <hr>
+            <div style="margin: 0 auto;">
+                <p style="width: 100%; font-size: small; color: #f2f2f2;">CREATED AND POWERED BY: OASISX</p>
             </div>
         </div>
     </div>
-
     <canvas id="board"></canvas>
-
     <div id="leaderboardModal" class="login">
         <div class="leader-content">
             <!-- <div class="profileHeader"> -->
                 <div style="display: flex; justify-content: space-between; padding: 15px 0px;">
                     <img style="width: 30%" src="./PE1PE.png" alt="loading ..">
-                    <button id="connectButton">
+                    <button id="DisconnectButton">
                         <p>Disconnect</p>
                     </button>
                 </div>
@@ -158,7 +146,7 @@
                 <hr style="margin: 15px auto 15px auto; border-color: #f2f2f2;">
 
                 <div id="leaderboardBody"
-                    style="display: flex; justify-content: space-between;  flex-wrap: wrap; height: 300px; overflow-y: auto;">
+                    style="display: flex; justify-content: space-between;  flex-wrap: wrap; height: fit-content; overflow-y: auto; ">
                 </div>
                 <div style="margin: 0 auto;">
                     <p style="color: #f2f2f2;"> DEADLINE: AUGUST 30, 2023</p>
@@ -176,8 +164,6 @@
             <!-- </div> -->
         </div>
     </div>
-
-
 </body>
 
 </html>

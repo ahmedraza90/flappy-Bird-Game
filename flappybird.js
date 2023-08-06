@@ -75,6 +75,69 @@ function start() {
         console.log("please install metamask")
     }
 }
+function disconnect(){
+    var disconnect = document.getElementById("DisconnectButton")
+    disconnect.addEventListener("click", ()=>{
+        location.reload()
+    });
+}
+function fetchUser(walletAddress) {
+    const user = document.getElementById('user');
+    const userNames = document.getElementById('userName');
+
+    user.innerHTML = ''
+    userNames.innerHTML = ''
+    // // Make a POST request to your backend API
+    fetch(`https://qr-code-api.oasisx.world/flappy-get-user/${walletAddress}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            userNames.innerHTML = `
+                <p style="margin: 0;">${data.userName}</p>
+            `
+            user.innerHTML = `
+                <p style="margin: 0;">${data.email}</p>
+                <p style="margin: 0%;">${compressAddress(data.walletAddress, 5, 4)}.</p>
+            `
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+
+}
+
+function topScore(){
+    const topScore = document.getElementById('topScore');
+
+    topScore.innerHTML = ''
+
+    // // Make a POST request to your backend API
+    fetch('https://qr-code-api.oasisx.world/flappy-get-all-user', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+            console.log('Success:', data.scores[0].score);
+            topScore.innerHTML = `
+            <p style="margin: 0;"> <span style="color: rgb(57, 130, 0);">TOP SCORE #</span><span
+                    style="color: #f2f2f2;"> ${data.scores[0].score} </span></p>
+                <p style="margin: 0;"><span style="color: rgb(57, 130, 0);">USER</span><span style="color: #f2f2f2;"> #
+                ${data.scores[0].userName}</span></p>
+            `
+    })
+    .catch((error) => {
+            console.error('Error:', error);
+    });
+}
 function connectWallet() {
     var loginModal = document.getElementById("myModal");
     var profileModal = document.getElementById("profile")
@@ -82,9 +145,6 @@ function connectWallet() {
     var createModal = document.getElementById("create");
     var createAccount = document.getElementById("CreateAccount")
     var leaderButton = document.getElementById('leaderButton')
-
-
-    
 
     // Request account access
     ethereum.request({ method: "eth_requestAccounts" })
@@ -106,6 +166,9 @@ function connectWallet() {
                     loginModal.style.display = 'none'
                     if (data.message === "User already registered") {
                         profileModal.style.display = 'block'
+                        fetchUser(accounts[0])
+                        topScore()
+                        disconnect()
                         playNow.addEventListener("click", startGame);
                         leaderButton.addEventListener("click", gameover);
 
@@ -165,7 +228,7 @@ function startGame() {
 
     leaderboardModal.style.display = "none"
     profileModal.style.display = "none";
-    
+
 
     // Clear previous interval if it exists
     if (pipeInterval) {
@@ -229,7 +292,6 @@ function update() {
     context.fillText(score, 5, 45);
 
     if (gameOver) {
-
         bird.y = birdY;
         pipeArray = [];
         velocityY = 0; // Reset the vertical velocity to zero
@@ -252,6 +314,7 @@ function gameover() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data["0"]);
+            topScore()
             displayLeaderboard(data["0"]);
         })
         .catch((error) => {
@@ -314,22 +377,22 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
     return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
 }
 function displayLeaderboard(data) {
-
+    
     score = 0;
     const leaderboardBody = document.getElementById('leaderboardBody');
     var modal = document.getElementById("leaderboardModal");
     const backProfile = document.getElementById('backProfile')
     var profileModal = document.getElementById("profile")
-    
-    
-    
+
+
+
     // Clear old leaderboard data
     leaderboardBody.innerHTML = '';
-    
+
     // Create rows for the leaderboard table using the data
     let dataRows = data.map((item, index) => {
-        
-        
+
+
         return `
         <p style="margin: 0; color: rgb(57, 130, 0);"><span>${index + 1}</span>#<span>${item.userName}</span></p>
         <p style="margin: 0%; color: #f2f2f2;">${item.score}</p>
@@ -339,7 +402,7 @@ function displayLeaderboard(data) {
     ).join('');
     // Insert the new rows
     leaderboardBody.innerHTML = dataRows;
-    
+
 
     profileModal.style.display = "none";
     modal.style.display = "block";
