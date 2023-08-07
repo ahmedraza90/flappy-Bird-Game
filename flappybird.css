@@ -38,12 +38,25 @@ body {
   margin-bottom: 15px;
   margin-top: 10px;
 }
-#DisconnectButton {
+#DisconnectButtonProfile {
   /* border-radius: 5px; */
   font-family: 'Silkscreen', cursive;
   margin-bottom: 15px;
   margin-top: 10px;
 }
+#DisconnectButtonCreate {
+  /* border-radius: 5px; */
+  font-family: 'Silkscreen', cursive;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+#DisconnectButtonLeader {
+  /* border-radius: 5px; */
+  font-family: 'Silkscreen', cursive;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
 #startButton {
   padding: 10px 20px;
   font-size: 24px;

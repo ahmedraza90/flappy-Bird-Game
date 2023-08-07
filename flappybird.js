@@ -37,6 +37,10 @@ let gamestart = false
 let walletConnect = false
 let walletAddress = ""
 
+let jumpSound = new Audio('flap.mp3');
+let collisionSound = new Audio('flappy-bird-hit-sound.mp3');
+let pointSound = new Audio('point.mp3')
+
 
 window.onload = function () {
     board = document.getElementById("board");
@@ -62,24 +66,44 @@ function start() {
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
+    var createAccount = document.getElementById("CreateAccount");
+    var DisconnectButtonProfile = document.getElementById("DisconnectButtonProfile");
+    var DisconnectButtonCreate = document.getElementById("DisconnectButtonCreate");
+    var DisconnectButtonLeader = document.getElementById("DisconnectButtonLeader");
+    var playNow = document.getElementById("playNow");
+    var leaderButton = document.getElementById('leaderButton');
+    const backProfile = document.getElementById('backProfile');
+    var modal = document.getElementById("leaderboardModal");
+    var profileModal = document.getElementById("profile")
+
+    createAccount.addEventListener("click", createAcc);
+    connectButton.addEventListener("click", connectWallet);
+    connectButton.addEventListener("touchstart", connectWallet);
+    playNow.addEventListener("click", startGame);
+    leaderButton.addEventListener("click", displayLeaderboard);
+    backProfile.addEventListener('click', () => {
+        modal.style.display = 'none'
+        profileModal.style.display = 'block'
+    })
+    DisconnectButtonProfile.addEventListener("click", () => {
+        location.reload()
+    });
+    DisconnectButtonCreate.addEventListener("click", () => {
+        location.reload()
+    });
+    DisconnectButtonLeader.addEventListener("click", () => {
+        location.reload()
+    });
 
     if (typeof window.ethereum !== "undefined") {
         connectButton.style.display = "block"
         loginModal.style.display = 'block'
-        connectButton.addEventListener("click", connectWallet);
-        connectButton.addEventListener("touchstart", connectWallet);
 
     } else {
         NometaMask.style.display = "block"
         loginModal.style.display = 'block'
         console.log("please install metamask")
     }
-}
-function disconnect(){
-    var disconnect = document.getElementById("DisconnectButton")
-    disconnect.addEventListener("click", ()=>{
-        location.reload()
-    });
 }
 function fetchUser(walletAddress) {
     const user = document.getElementById('user');
@@ -111,8 +135,7 @@ function fetchUser(walletAddress) {
 
 
 }
-
-function topScore(){
+function topScore() {
     const topScore = document.getElementById('topScore');
 
     topScore.innerHTML = ''
@@ -124,8 +147,8 @@ function topScore(){
             'Content-Type': 'application/json',
         },
     })
-    .then(response => response.json())
-    .then(data => {
+        .then(response => response.json())
+        .then(data => {
             console.log('Success:', data.scores[0].score);
             topScore.innerHTML = `
             <p style="margin: 0;"> <span style="color: rgb(57, 130, 0);">TOP SCORE #</span><span
@@ -133,18 +156,47 @@ function topScore(){
                 <p style="margin: 0;"><span style="color: rgb(57, 130, 0);">USER</span><span style="color: #f2f2f2;"> #
                 ${data.scores[0].userName}</span></p>
             `
-    })
-    .catch((error) => {
+        })
+        .catch((error) => {
             console.error('Error:', error);
-    });
+        });
+}
+function leaderBoard_data() {
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    // Clear old leaderboard data
+    leaderboardBody.innerHTML = '';
+    // // Make a POST request to your backend API
+    fetch('https://qr-code-api.oasisx.world/flappy-update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data["0"]);
+            // Create rows for the leaderboard table using the data
+            let dataRows = data["0"].map((item, index) => {
+                return `
+                        <p style="margin: 0; color: rgb(57, 130, 0);"><span>${index + 1}</span>#<span>${item.userName}</span></p>
+                        <p style="margin: 0%; color: #f2f2f2;">${item.score}</p>
+                        <hr style="margin: 15px auto 15px auto; border-color: rgb(57, 130, 0); width: 100%;">
+                `
+            }
+            ).join('');
+            leaderboardBody.innerHTML = dataRows;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    // Insert the new rows
 }
 function connectWallet() {
     var loginModal = document.getElementById("myModal");
     var profileModal = document.getElementById("profile")
-    var playNow = document.getElementById("playNow")
     var createModal = document.getElementById("create");
-    var createAccount = document.getElementById("CreateAccount")
-    var leaderButton = document.getElementById('leaderButton')
 
     // Request account access
     ethereum.request({ method: "eth_requestAccounts" })
@@ -168,13 +220,8 @@ function connectWallet() {
                         profileModal.style.display = 'block'
                         fetchUser(accounts[0])
                         topScore()
-                        disconnect()
-                        playNow.addEventListener("click", startGame);
-                        leaderButton.addEventListener("click", gameover);
-
                     } else {
                         createModal.style.display = 'block'
-                        createAccount.addEventListener("click", createAcc);
                     }
                 })
                 .catch((error) => {
@@ -187,18 +234,18 @@ function connectWallet() {
         });
 }
 function createAcc() {
-    var name = "";
-    var email = "";
-    // Get the input field values
-    const nameInput = document.getElementById('name');
-    const emailInput = document.getElementById('email');
+  
     var createModal = document.getElementById("create");
     var profileModal = document.getElementById("profile")
-    var playNow = document.getElementById("playNow")
 
+    var name = "";
+    var email = "";
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
     var name = nameInput.value;
     var email = emailInput.value;
 
+    topScore()
     if (name.length > 0) {
         // Send the wallet address to the backend.
         fetch('https://qr-code-api.oasisx.world/flappy-save', {
@@ -210,7 +257,7 @@ function createAcc() {
             .then((data) => {
                 createModal.style.display = "none";
                 profileModal.style.display = "block";
-                playNow.addEventListener("click", startGame);
+                fetchUser(walletAddress)
 
             })
             .catch((error) => {
@@ -221,14 +268,9 @@ function createAcc() {
 function startGame() {
     var leaderboardModal = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile")
-    var playNow = document.getElementById("playNow");
-    var leaderButton = document.getElementById('leaderButton')
-
-
 
     leaderboardModal.style.display = "none"
     profileModal.style.display = "none";
-
 
     // Clear previous interval if it exists
     if (pipeInterval) {
@@ -242,8 +284,6 @@ function startGame() {
 
     document.addEventListener("keydown", moveBird);
     document.addEventListener("touchstart", moveBird);
-    playNow.addEventListener("click", startGame);
-    leaderButton.addEventListener("click", gameover);
 
 }
 function update() {
@@ -273,10 +313,12 @@ function update() {
 
         if (!pipe.passed && bird.x > pipe.x + pipe.width) {
             score += 0.5; //0.5 because there are 2 pipes! so 0.5*2 = 1, 1 for each set of pipes
+            pointSound.play()
             pipe.passed = true;
         }
 
         if (detectCollision(bird, pipe)) {
+            collisionSound.play();
             gameOver = true;
         }
     }
@@ -297,29 +339,10 @@ function update() {
         velocityY = 0; // Reset the vertical velocity to zero
         velocityX = -2; //pipes moving left speed
         gravity = 0.4;    // Hide the leaderboard modal
-        gameover()
+        topScore()
+        displayLeaderboard();
         return;
     }
-}
-function gameover() {
-
-    // // Make a POST request to your backend API
-    fetch('https://qr-code-api.oasisx.world/flappy-update', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data["0"]);
-            topScore()
-            displayLeaderboard(data["0"]);
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
 }
 function resetGame() {
     gameOver = false;
@@ -362,6 +385,7 @@ function moveBird(e) {
 
     if (!gameOver) {
         if (e.code == "Space" || e.code == "ArrowUp" || e.code == "KeyX" || e.type === "touchstart") {
+            jumpSound.play();
             //jump
             velocityY = -6;
         }
@@ -376,33 +400,12 @@ function detectCollision(a, b) {
 function compressAddress(address, visibleCharStart, visibleCharEnd, separator = '...') {
     return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
 }
-function displayLeaderboard(data) {
-    
+function displayLeaderboard() {
+
     score = 0;
-    const leaderboardBody = document.getElementById('leaderboardBody');
+    leaderBoard_data()
     var modal = document.getElementById("leaderboardModal");
-    const backProfile = document.getElementById('backProfile')
     var profileModal = document.getElementById("profile")
-
-
-
-    // Clear old leaderboard data
-    leaderboardBody.innerHTML = '';
-
-    // Create rows for the leaderboard table using the data
-    let dataRows = data.map((item, index) => {
-
-
-        return `
-        <p style="margin: 0; color: rgb(57, 130, 0);"><span>${index + 1}</span>#<span>${item.userName}</span></p>
-        <p style="margin: 0%; color: #f2f2f2;">${item.score}</p>
-        <hr style="margin: 15px auto 15px auto; border-color: rgb(57, 130, 0); width: 100%;">
-        `
-    }
-    ).join('');
-    // Insert the new rows
-    leaderboardBody.innerHTML = dataRows;
-
 
     profileModal.style.display = "none";
     modal.style.display = "block";
@@ -420,8 +423,5 @@ function displayLeaderboard(data) {
     // }
 
 
-    backProfile.addEventListener('click', () => {
-        modal.style.display = 'none'
-        profileModal.style.display = 'block'
-    })
+
 }
