@@ -1,7 +1,7 @@
 //board
 let board;
-let boardWidth = 360;
-let boardHeight = 640;
+boardWidth = Math.min(360, window.innerWidth);
+boardHeight = Math.min(640, window.innerHeight);
 let context;
 
 //bird
@@ -234,7 +234,7 @@ function connectWallet() {
         });
 }
 function createAcc() {
-  
+
     var createModal = document.getElementById("create");
     var profileModal = document.getElementById("profile")
 
