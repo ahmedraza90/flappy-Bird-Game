@@ -171,7 +171,7 @@ function leaderBoard_data() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ walletAddress: `${walletAddress}`, score: score }),
+        body: JSON.stringify({ walletAddress: `${walletAddress}`, score }),
     })
         .then(response => response.json())
         .then(data => {
@@ -339,6 +339,7 @@ function update() {
         velocityY = 0; // Reset the vertical velocity to zero
         velocityX = -2; //pipes moving left speed
         gravity = 0.4;    // Hide the leaderboard modal
+        leaderBoard_data()
         topScore()
         displayLeaderboard();
         return;
@@ -403,7 +404,6 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
 function displayLeaderboard() {
 
     score = 0;
-    leaderBoard_data()
     var modal = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile")
 
