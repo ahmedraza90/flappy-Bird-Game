@@ -2,6 +2,7 @@ body {
   font-family: 'Silkscreen', cursive;
   text-align: center;
   background: linear-gradient(to bottom, #4e7dbf, #23385f);
+  /* background: rgb(68, 189, 0); */
   height: 100vh;
 }
 
@@ -32,29 +33,41 @@ body {
   /* z-index: 1; */
 }
 
-#connectButton {
-  /* border-radius: 5px; */
-  font-family: 'Silkscreen', cursive;
-  margin-bottom: 15px;
-  margin-top: 10px;
-}
+
 #DisconnectButtonProfile {
-  /* border-radius: 5px; */
+  border-radius: 0px;
   font-family: 'Silkscreen', cursive;
   margin-bottom: 15px;
   margin-top: 10px;
+  background: #f9f9f9;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: #f9f9f9;
 }
+
 #DisconnectButtonCreate {
-  /* border-radius: 5px; */
+  border-radius: 0px;
   font-family: 'Silkscreen', cursive;
   margin-bottom: 15px;
   margin-top: 10px;
+  background: #f9f9f9;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: #f9f9f9;
 }
+
 #DisconnectButtonLeader {
-  /* border-radius: 5px; */
+  border-radius: 0px;
   font-family: 'Silkscreen', cursive;
   margin-bottom: 15px;
   margin-top: 10px;
+  background: #f9f9f9;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: #f9f9f9;
 }
 
 #startButton {
@@ -224,9 +237,9 @@ hr {
 .login {
   display: none;
   /* Hidden by default */
-  position: fixed;
+  /* position: fixed; */
   /* Stay in place */
-  z-index: 1;
+  /* z-index: 1; */
   /* Sit on top */
   padding-top: 0;
   /* Location of the box */
@@ -243,6 +256,7 @@ hr {
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
+
 /* Modal Content */
 .login-content {
   background: rgb(68, 189, 0);
@@ -260,6 +274,7 @@ hr {
   animation-name: animatetop;
   animation-duration: 0.4s
 }
+
 /* Modal Content */
 .profile-content {
   background: rgb(68, 189, 0);
@@ -267,8 +282,8 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 8.2%;
-  padding: 5px 20px;
+  margin-top: 4%;
+  padding: 25px;
   width: 20%;
   height: fit-content;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -284,8 +299,8 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 15%;
-  padding: 5px 20px;
+  margin-top: 10%;
+  padding: 25px;
   width: 20%;
   height: fit-content;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -294,6 +309,7 @@ hr {
   animation-name: animatetop;
   animation-duration: 0.4s
 }
+
 .create-content {
   background: rgb(68, 189, 0);
   border-radius: 5px;
@@ -310,21 +326,81 @@ hr {
   animation-name: animatetop;
   animation-duration: 0.4s
 }
+.gameOver-content {
+  background: rgb(68, 189, 0);
+  border-radius: 5px;
+  /* border: 1px solid red; */
+  /* position: relative; */
+  margin: auto;
+  margin-top: 4%;
+  padding: 5px;
+  width: fit-content;
+  height: fit-content;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
 .flappyBird {
   color: #f2f2f2;
   font-size: 40px;
   margin: 5% 60px;
-  /* border: 2px red solid; */
 }
 
 .profileHeader {
-  margin: 10px 30px; 
+  margin: 10px 30px;
   width: 350px;
   border: 2px red solid;
 }
+
 .billion {
-  color: black; 
+  color: black;
   font-size: 40px;
+}
+
+#connectButton {
+  font-family: 'Silkscreen', cursive;
+  display: none;
+  width: 40%;
+  padding: 10px;
+  margin: 25px auto;
+  border-radius: 0;
+  border: none;
+}
+
+#CreateAccount {
+  width: 60%;
+  margin: 30px auto 20px auto;
+  background-color: white;
+  color: black;
+  font-family: 'Silkscreen', cursive;
+  border: 0;
+  font-size: 17px;
+  padding: 10px;
+}
+
+#leaderButtonOver {
+  width: 41%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  font-family: 'Silkscreen', cursive;
+  font-size: 19px;
+  background: none;
+  background-color: green;
+  border: 0;
+}
+
+#playAgain {
+  width: 41%;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  background-color: red;
+  color: white;
+  font-family: 'Silkscreen', cursive;
+  border: 0;
+  font-size: 17px;
 }
 
 @media screen and (max-width: 767px) {
@@ -334,26 +410,52 @@ hr {
     margin: 10px auto;
     /* width: 100%; */
   }
+
   .profile-content {
     margin-top: 10%;
     width: 87%;
-    padding: 5px 10px;
+    padding: 20px;
   }
+
   .leader-content {
     margin-top: 50%;
     width: 87%;
-    padding: 5px 10px;
+    padding: 20px 10px;
   }
-  .login-content{
+
+  .login-content {
     margin-top: 13%;
   }
+
+  .gameOver-content {
+    margin-top: 50%;
+  }
+
   .profileHeader {
-    margin: 10px 30px; 
+    margin: 10px 30px;
     width: 280px;
     margin-top: 5%;
   }
+
   .billion {
     font-size: 35px;
   }
-  
+
+  #CreateAccount {
+    font-size: 15px;
+  }
+
+  #connectButton {
+    width: 50%;
+  }
+
+  #leaderButtonOver {
+    font-size: 15px;
+    padding-top: 10px;
+  }
+
+  #playAgain {
+    font-size: 15px;
+  }
+
 }

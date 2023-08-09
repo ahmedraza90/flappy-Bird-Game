@@ -63,6 +63,7 @@ window.onload = function () {
     start()
 }
 function start() {
+    board = document.getElementById("board");
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
@@ -71,7 +72,9 @@ function start() {
     var DisconnectButtonCreate = document.getElementById("DisconnectButtonCreate");
     var DisconnectButtonLeader = document.getElementById("DisconnectButtonLeader");
     var playNow = document.getElementById("playNow");
+    var playAgain = document.getElementById("playAgain");
     var leaderButton = document.getElementById('leaderButton');
+    var leaderButtonOver = document.getElementById('leaderButtonOver');
     const backProfile = document.getElementById('backProfile');
     var modal = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile")
@@ -79,8 +82,16 @@ function start() {
     createAccount.addEventListener("click", createAcc);
     connectButton.addEventListener("click", connectWallet);
     connectButton.addEventListener("touchstart", connectWallet);
-    playNow.addEventListener("click", startGame);
+    playNow.addEventListener("click", () => {
+        board.style.display = 'block'
+        startGame()
+    });
+    playAgain.addEventListener("click", () => {
+        board.style.display = 'block'
+        startGame()
+    });
     leaderButton.addEventListener("click", displayLeaderboard);
+    leaderButtonOver.addEventListener("click", displayLeaderboard);
     backProfile.addEventListener('click', () => {
         modal.style.display = 'none'
         profileModal.style.display = 'block'
@@ -163,8 +174,12 @@ function topScore() {
 }
 function leaderBoard_data() {
     const leaderboardBody = document.getElementById('leaderboardBody');
+    const yourScore = document.getElementById('yourScore');
+    const yourRank = document.getElementById('yourRank');
     // Clear old leaderboard data
     leaderboardBody.innerHTML = '';
+    yourScore.innerHTML = '';
+    yourRank.innerHTML = '';
     // // Make a POST request to your backend API
     fetch('https://qr-code-api.oasisx.world/flappy-update', {
         method: 'POST',
@@ -186,6 +201,24 @@ function leaderBoard_data() {
             }
             ).join('');
             leaderboardBody.innerHTML = dataRows;
+            
+            let score;
+            let rank;
+            data["0"].map((item, index) => {
+                if (item.walletAddress == walletAddress) {
+                    score = item.score
+                    rank = index + 1
+                }
+            })
+            yourScore.innerHTML = `
+                <hr style="background: green; border: none; height: 2px;">
+                <p id="yourScore"style="color: #f2f2f2; font-size: 20px;"> YOUR SCORE ${score}</p>
+                <hr style="background: green; border: none; height: 2px;">
+            `;
+            yourRank.innerHTML = `
+                <span style="color: #f2f2f2; font-size: 18px">  RANK # ${rank}</span>
+                <br>
+            `;
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -268,9 +301,11 @@ function createAcc() {
 function startGame() {
     var leaderboardModal = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile")
+    var gameOvers = document.getElementById("gameOver")
 
     leaderboardModal.style.display = "none"
     profileModal.style.display = "none";
+    gameOvers.style.display = 'none';
 
     // Clear previous interval if it exists
     if (pipeInterval) {
@@ -345,12 +380,6 @@ function update() {
         return;
     }
 }
-function resetGame() {
-    gameOver = false;
-    var modal = document.getElementById("leaderboardModal");
-    modal.style.display = 'none';
-
-}
 function placePipes() {
     if (gameOver) {
         return;
@@ -402,13 +431,24 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
     return address.substring(0, visibleCharStart) + separator + address.substring(address.length - visibleCharEnd);
 }
 function displayLeaderboard() {
-
+    
     score = 0;
-    var modal = document.getElementById("leaderboardModal");
+    var leader = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile")
+    var gameOvers = document.getElementById("gameOver")
+    board = document.getElementById("board");
 
-    profileModal.style.display = "none";
-    modal.style.display = "block";
+    
+    if(!gameOver){
+        profileModal.style.display = "none";
+        leader.style.display = "block";
+    } else if(board.style.display === "block"){
+        board.style.display = "none";
+        gameOvers.style.display = 'block';
+    } else {
+        gameOvers.style.display = 'none';
+        leader.style.display = "block";
+    }
 
     // When the user clicks on <span> (x), close the modal
     // span.onclick = function () {
@@ -421,7 +461,5 @@ function displayLeaderboard() {
     //     modal.style.display = "none";
     //   }
     // }
-
-
-
 }
+
