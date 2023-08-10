@@ -299,7 +299,7 @@ hr {
   /* border: 1px solid red; */
   /* position: relative; */
   margin: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   padding: 25px;
   width: 20%;
   height: fit-content;
@@ -418,7 +418,7 @@ hr {
   }
 
   .leader-content {
-    margin-top: 50%;
+    margin-top: 10%;
     width: 87%;
     padding: 20px 10px;
   }

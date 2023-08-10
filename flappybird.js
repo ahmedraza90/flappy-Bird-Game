@@ -90,8 +90,14 @@ function start() {
         board.style.display = 'block'
         startGame()
     });
-    leaderButton.addEventListener("click", displayLeaderboard);
-    leaderButtonOver.addEventListener("click", displayLeaderboard);
+    leaderButton.addEventListener("click",  ()=>{
+        leaderBoard_data()
+        displayLeaderboard()
+    });
+    leaderButtonOver.addEventListener("click", ()=>{
+        leaderBoard_data()
+        displayLeaderboard()
+    });
     backProfile.addEventListener('click', () => {
         modal.style.display = 'none'
         profileModal.style.display = 'block'
@@ -172,7 +178,7 @@ function topScore() {
             console.error('Error:', error);
         });
 }
-function leaderBoard_data() {
+function leaderBoard_data(scores=0) {
     const leaderboardBody = document.getElementById('leaderboardBody');
     const yourScore = document.getElementById('yourScore');
     const yourRank = document.getElementById('yourRank');
@@ -186,7 +192,7 @@ function leaderBoard_data() {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ walletAddress: `${walletAddress}`, score }),
+        body: JSON.stringify({ walletAddress: `${walletAddress}`, score: scores }),
     })
         .then(response => response.json())
         .then(data => {
@@ -374,7 +380,7 @@ function update() {
         velocityY = 0; // Reset the vertical velocity to zero
         velocityX = -2; //pipes moving left speed
         gravity = 0.4;    // Hide the leaderboard modal
-        leaderBoard_data()
+        leaderBoard_data(score)
         topScore()
         displayLeaderboard();
         return;
