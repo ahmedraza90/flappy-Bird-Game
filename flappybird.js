@@ -73,6 +73,7 @@ function start() {
     var DisconnectButtonLeader = document.getElementById("DisconnectButtonLeader");
     var playNow = document.getElementById("playNow");
     var playAgain = document.getElementById("playAgain");
+    var gameOvers = document.getElementById("gameOver")
     var leaderButton = document.getElementById('leaderButton');
     var leaderButtonOver = document.getElementById('leaderButtonOver');
     const backProfile = document.getElementById('backProfile');
@@ -94,9 +95,9 @@ function start() {
         leaderBoard_data()
         displayLeaderboard()
     });
-    leaderButtonOver.addEventListener("click", ()=>{
-        leaderBoard_data()
-        displayLeaderboard()
+    leaderButtonOver.addEventListener("click", () => {
+        gameOvers.style.display = 'none';
+        profileModal.style.display = 'block'
     });
     backProfile.addEventListener('click', () => {
         modal.style.display = 'none'
