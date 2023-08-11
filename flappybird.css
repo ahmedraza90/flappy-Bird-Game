@@ -383,10 +383,10 @@ hr {
 
 #leaderButtonOver {
   width: 41%;
-  padding-top: 8px;
+  padding-top: 14px;
   padding-bottom: 8px;
   font-family: 'Silkscreen', cursive;
-  font-size: 19px;
+  font-size: 14.5px;
   background: none;
   background-color: green;
   border: 0;
