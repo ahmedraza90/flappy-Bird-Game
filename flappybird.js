@@ -441,19 +441,18 @@ function displayLeaderboard() {
     
     score = 0;
     var leader = document.getElementById("leaderboardModal");
-    var profileModal = document.getElementById("profile")
-    var gameOvers = document.getElementById("gameOver")
+    var profileModal = document.getElementById("profile");
+    var gameOvers = document.getElementById("gameOver");
     board = document.getElementById("board");
 
-    
-    if(!gameOver){
+    if(!gameOver){  //profile model to leader board
         profileModal.style.display = "none";
         leader.style.display = "block";
-    } else if(board.style.display === "block"){
+    } else if(board.style.display === "block"){ //game board to game over
         board.style.display = "none";
         gameOvers.style.display = 'block';
-    } else {
-        gameOvers.style.display = 'none';
+    } else {    
+        profileModal.style.display = 'none';
         leader.style.display = "block";
     }
 
