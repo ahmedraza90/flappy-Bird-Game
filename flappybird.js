@@ -86,10 +86,12 @@ function start() {
     connectButton.addEventListener("touchstart", connectWallet);
     shareButton.addEventListener("click", shareOnTwitter);
     playNow.addEventListener("click", () => {
+        score = 0;
         board.style.display = 'block'
         startGame()
     });
     playAgain.addEventListener("click", () => {
+        score = 0;
         board.style.display = 'block'
         startGame()
     });
@@ -441,7 +443,6 @@ function compressAddress(address, visibleCharStart, visibleCharEnd, separator = 
 }
 function displayLeaderboard() {
     
-    score = 0;
     var leader = document.getElementById("leaderboardModal");
     var profileModal = document.getElementById("profile");
     var gameOvers = document.getElementById("gameOver");
@@ -451,6 +452,7 @@ function displayLeaderboard() {
         profileModal.style.display = "none";
         leader.style.display = "block";
     } else if(board.style.display === "block"){ //game board to game over
+        
         board.style.display = "none";
         gameOvers.style.display = 'block';
     } else {    
