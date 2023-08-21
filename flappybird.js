@@ -67,6 +67,7 @@ function start() {
     var loginModal = document.getElementById("myModal");
     var NometaMask = document.getElementById("NometaMask")
     var connectButton = document.getElementById("connectButton");
+    var shareButton = document.getElementById("shareButton");
     var createAccount = document.getElementById("CreateAccount");
     var DisconnectButtonProfile = document.getElementById("DisconnectButtonProfile");
     var DisconnectButtonCreate = document.getElementById("DisconnectButtonCreate");
@@ -83,6 +84,7 @@ function start() {
     createAccount.addEventListener("click", createAcc);
     connectButton.addEventListener("click", connectWallet);
     connectButton.addEventListener("touchstart", connectWallet);
+    shareButton.addEventListener("click", shareOnTwitter);
     playNow.addEventListener("click", () => {
         board.style.display = 'block'
         startGame()
@@ -468,4 +470,11 @@ function displayLeaderboard() {
     //   }
     // }
 }
-
+function shareOnTwitter() {
+twitterText = `🚀Just hit ${score} points in my addictive Flappy Bird 🐦 game. Collect 'PEPE' crypto tokens, conquer tough obstacles, and compete for the 4.25 PEPE prize pool💰. 
+Can you beat my score? 
+Join the fun: https://pepe-flappy.netlify.app/ 🌐
+🔥#FlappyBird #CryptoGaming`
+    const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}`;
+    window.open(twitterURL, '_blank', 'width=550,height=420');
+}

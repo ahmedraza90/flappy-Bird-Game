@@ -392,6 +392,19 @@ hr {
   border: 0;
 }
 
+
+#shareButton {
+  width: 50%;
+  padding-top: 14px;
+  padding-bottom: 8px;
+  margin-top: 6px;
+  font-family: 'Silkscreen', cursive;
+  font-size: 14.5px;
+  background: none;
+  background-color: green;
+  border: 0;
+}
+
 #playAgain {
   width: 41%;
   padding-top: 10px;
