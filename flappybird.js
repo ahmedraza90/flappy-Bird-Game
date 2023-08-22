@@ -33,7 +33,7 @@ let velocityY = 0; //bird jump speed
 let gravity = 0.4;
 let gameOver = false;
 let score = 0;
-let gamestart = false
+var gameStarted = false;
 let walletConnect = false
 let walletAddress = ""
 
@@ -323,23 +323,33 @@ function startGame() {
         clearInterval(pipeInterval);
     }
     // Reset the pipeArray and score
+    gameStarted = false;
     gameOver = false
     
-    setTimeout(function() {
-        requestAnimationFrame(update);
-        pipeInterval = setInterval(placePipes, 1500); //every 1.5 seconds
-    }, 1000);
+    requestAnimationFrame(update);
+    pipeInterval = setInterval(placePipes, 1500); //every 1.5 seconds
+ 
 
-    document.addEventListener("keydown", moveBird);
-    document.addEventListener("touchstart", moveBird);
-
+    // document.addEventListener("keydown", moveBird);
+    document.addEventListener("keydown", function(event) {
+        if (event.code === "Space") {
+            gameStarted = true;
+        }
+        moveBird(event);
+    });
+    document.addEventListener("touchstart", function(event) {
+        gameStarted = true;
+        moveBird(event);
+    });
 }
 function update() {
-
     if (gameOver) {
         return;
     }
     requestAnimationFrame(update);
+    if (!gameStarted) {
+        return;
+    }
 
     context.clearRect(0, 0, board.width, board.height);
 
