@@ -324,9 +324,11 @@ function startGame() {
     }
     // Reset the pipeArray and score
     gameOver = false
-
-    requestAnimationFrame(update);
-    pipeInterval = setInterval(placePipes, 1500); //every 1.5 seconds
+    
+    setTimeout(function() {
+        requestAnimationFrame(update);
+        pipeInterval = setInterval(placePipes, 1500); //every 1.5 seconds
+    }, 1000);
 
     document.addEventListener("keydown", moveBird);
     document.addEventListener("touchstart", moveBird);
@@ -343,7 +345,7 @@ function update() {
 
     //bird
     velocityY += gravity;
-    // bird.y += velocityY;
+    //bird.y += velocityY;
     bird.y = Math.max(bird.y + velocityY, 0); //apply gravity to current bird.y, limit the bird.y to top of the canvas
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
