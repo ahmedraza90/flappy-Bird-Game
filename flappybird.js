@@ -462,6 +462,9 @@ function placePipes() {
     if (gameOver) {
         return;
     }
+    if(!gameStarted){
+        return;
+    }
 
     //(0-1) * pipeHeight/2.
     // 0 -> -128 (pipeHeight/4)
@@ -540,10 +543,12 @@ function displayLeaderboard() {
     // }
 }
 function shareOnTwitter() {
-twitterText = `🚀Just hit ${score} points in my addictive Flappy Bird 🐦 game. Collect 'PEPE' crypto tokens, conquer tough obstacles, and compete for the 4.25 PEPE prize pool💰. 
+twitterText = `🚀Just hit ${score} points in my addictive Flappy Bird 🐦 game. Collect 'PEPE' crypto tokens, Conquer tough obstacles, and compete for the $1500 USDC prize pool💰. 
+
 Can you beat my score? 
 Join the fun: https://pepe-flappy.netlify.app/ 🌐
-🔥#FlappyBird #CryptoGaming`
+
+🔥#FlappyBird #web3gaming`
     const twitterURL = `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}`;
     window.open(twitterURL, '_blank', 'width=550,height=420');
 }
