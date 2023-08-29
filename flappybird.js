@@ -96,14 +96,16 @@ function start() {
         startGame()
     });
     leaderButton.addEventListener("click",  ()=>{
-        leaderBoard_data()
+        get_leaderBoard_data()
         displayLeaderboard()
     });
     leaderButtonOver.addEventListener("click", () => {
+        topScore()
         gameOvers.style.display = 'none';
         profileModal.style.display = 'block'
     });
     backProfile.addEventListener('click', () => {
+        topScore()
         modal.style.display = 'none'
         profileModal.style.display = 'block'
     })
@@ -182,6 +184,59 @@ function topScore() {
         .catch((error) => {
             console.error('Error:', error);
         });
+}
+function get_leaderBoard_data() {
+    const leaderboardBody = document.getElementById('leaderboardBody');
+    const yourScore = document.getElementById('yourScore');
+    const yourRank = document.getElementById('yourRank');
+    // Clear old leaderboard data
+    leaderboardBody.innerHTML = '';
+    yourScore.innerHTML = '';
+    yourRank.innerHTML = '';
+    // // Make a POST request to your backend API
+    fetch('https://qr-code-api.oasisx.world/flappy-get-all-user', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data.scores);
+            // Create rows for the leaderboard table using the data
+            let dataRows = data.scores.map((item, index) => {
+                return `
+                        <p style="margin: 0; color: rgb(57, 130, 0);"><span>${index + 1}</span>#<span>${item.userName}</span></p>
+                        <p style="margin: 0%; color: #f2f2f2;">${item.score}</p>
+                        <hr style="margin: 15px auto 15px auto; border-color: rgb(57, 130, 0); width: 100%;">
+                `
+            }
+            ).join('');
+            leaderboardBody.innerHTML = dataRows;
+            
+            let score;
+            let rank;
+            data.scores.map((item, index) => {
+                if (item.walletAddress == walletAddress) {
+                    score = item.score
+                    rank = index + 1
+                }
+            })
+            yourScore.innerHTML = `
+                <hr style="background: green; border: none; height: 2px;">
+                <p id="yourScore"style="color: #f2f2f2; font-size: 20px;"> YOUR SCORE ${score}</p>
+                <hr style="background: green; border: none; height: 2px;">
+            `;
+            yourRank.innerHTML = `
+                <span style="color: #f2f2f2; font-size: 18px">  RANK # ${rank}</span>
+                <br>
+            `;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+    // Insert the new rows
 }
 function leaderBoard_data(scores=0) {
     const leaderboardBody = document.getElementById('leaderboardBody');
